@@ -1,1 +1,0 @@
-add arquivos de conexão com api - auth
