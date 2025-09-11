@@ -9,8 +9,18 @@ import iconHelp from "../assets/img/icon-help.svg";
 import iconLogout from "../assets/img/icon-logout.svg";
 import '../assets/css/global.css';
 import '../assets/css/menu.css';
+import { useEffect, useState } from "react";
+import { get } from "../utils/api";
+import { Avatar } from "@telefonica/mistica";
 
 export default function Menu() {
+
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        get("/usuarios/1").then((data) => setUser(data));
+    }, []);
+
     return (
         <div className="container-menu">
             <div className="menu-padding">
@@ -20,8 +30,8 @@ export default function Menu() {
                     <p>Minimizar</p>
                 </div>
                 <div className="menu-info-perfil">
-                    <img src={imgPerfil} alt='Foto de Perfil Ficticia' />
-                    <p>Juan Serrano</p>
+                    <Avatar size={64} backgroundColor={"var(--cor-roxo-escuro)"}/>
+                    <p>{user?.nome_completo || "Nome Completo"}</p>
                 </div>
             </div>
             <div className="menu-container-options">

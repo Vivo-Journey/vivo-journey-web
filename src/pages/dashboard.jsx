@@ -1,10 +1,10 @@
-import Menu from "../components/menu";
-import '../assets/css/global.css';
+import { Meter } from "@telefonica/mistica";
 import '../assets/css/dashboard.css';
-import porc from "../assets/img/Meter.png";
+import '../assets/css/global.css';
+import Menu from "../components/menu";
 
 export default function Dashboard() {
-    
+
     return (
         <div className="tela-dash">
             <Menu></Menu>
@@ -13,7 +13,7 @@ export default function Dashboard() {
                 <div className="cards-trilhas">
                     <div className="dash-card-trilha">
                         {/* img temporária */}
-                        <img src={porc}></img>
+                        <Meter colors={["var(--cor-rosa-chiclete)", "#B292C8"]} width={200} type="circular" values={[75, 25, 0]} />
                         <p>75%</p>
                         <div>
                             <h1>Cultura da Empresa</h1>
@@ -21,8 +21,7 @@ export default function Dashboard() {
                         </div>
                     </div>
                     <div className="dash-card-trilha">
-                        {/* img temporária */}
-                        <img src={porc}></img>
+                        <Meter colors={["var(--cor-rosa-chiclete)", "#B292C8"]} width={200} type="circular" values={[75, 25, 0]} />
                         <p>75%</p>
                         <div>
                             <h1>Cultura da Empresa</h1>
@@ -30,17 +29,16 @@ export default function Dashboard() {
                         </div>
                     </div>
                     <div className="dash-card-trilha">
-                        {/* img temporária */}
-                        <img src={porc}></img>
+                        <Meter colors={["var(--cor-rosa-chiclete)", "#B292C8"]} width={200} type="circular" values={[75, 25, 0]} />
                         <p>75%</p>
                         <div>
                             <h1>Cultura da Empresa</h1>
                             <h3>20 Vídeos</h3>
                         </div>
                     </div>
-                   
+
                 </div>
-           
+
             </div>
         </div>
     )
