@@ -1,8 +1,7 @@
 .tela-dash{
     width: 100%;
-    height: 100%;
+    height: 110%;
     background-color: #F0EDFF;
-    display: flex;
 }
 
 .dash-container{
@@ -21,17 +20,13 @@
     height: 50vh;
     background-color: #FFFFFF;
     border-radius: 20px;
-    padding: 5% 5%;
+    padding: 4% 4%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     margin: 2% 2%;
     box-shadow: 5px 5px 10px #888888;
-}
-
-.dash-card-trilha img{
-    width: 20vh;
 }
 
 .dash-card-trilha p{
@@ -39,7 +34,7 @@
     color: #55038C;
     font-weight: bold;
     position: absolute;
-    margin-bottom: 7%;
+    margin-top: 4%;
 }
 
 .dash-card-trilha h1{
@@ -50,4 +45,78 @@
 .dash-card-trilha h3{
     color: #B292C8;  
     font-size: 14px;
+}
+
+.dash-info-buddy{
+    display: flex;
+    position: relative;
+    z-index: 2;
+}
+
+.card-buddy{
+    width: 60vh;
+    height: 60vh;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    padding: 4% 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2% 2%;
+    box-shadow: 5px 5px 10px #888888;
+}
+
+.card-buddy h1{
+    color: #F266A7;
+    font-size: 26px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.buddy-infos{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.buddy-campo-info{
+    margin: 2% 2%;
+}
+
+.buddy-campo-info-2{
+    color: #F266A7;
+    font-size: 14px;
+    width: 100%;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.buddy-campo-info li{
+    font-size: 14px;
+    width: 100%;
+    margin: 5px 0px 5px;
+}
+
+.card-buddy h3{
+    color: #F266A7;
+    font-size: 14px;
+    width: 100%;
+}
+
+.card-buddy span{
+    color: #262626;
+    font-size: 14px;
+    width: 100%;
+}
+
+.dash-img-fundo{
+    position: absolute;
+    z-index: 0;
+    margin-left: 110vh;
+    margin-top: -40vh;
 }

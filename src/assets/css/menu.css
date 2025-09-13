@@ -1,6 +1,6 @@
 .container-menu{
-    width: 50vh;
-    height: 100vh;
+    /* width: 50vh; */
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -40,7 +40,7 @@
 }
 
 .menu-info-perfil img{
-    width: 7vh;
+    width: 5vh;
 }
 
 .menu-info-perfil p{

@@ -30,7 +30,7 @@ export default function Menu() {
                     <p>Minimizar</p>
                 </div>
                 <div className="menu-info-perfil">
-                    <Avatar size={64} backgroundColor={"var(--cor-roxo-escuro)"}/>
+                    <Avatar size={50} backgroundColor={"var(--cor-roxo-escuro)"}/>
                     <p>{user?.nome_completo || "Nome Completo"}</p>
                 </div>
             </div>
