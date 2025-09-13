@@ -4,12 +4,17 @@ import App from './App.jsx'
 
 import '@telefonica/mistica/css/mistica.css'
 
-import { ThemeContextProvider, getMovistarSkin } from '@telefonica/mistica'
+import {
+  ThemeContextProvider,
+  getVivoSkin,
+} from "@telefonica/mistica";
 
 const misticaTheme = {
-  skin: getMovistarSkin(),
-  i18n: { locale: 'pt-BR', phoneNumberFormattingRegionCode: 'BR' },
-}
+  colorScheme: 'light',
+  skin: getVivoSkin(),
+  i18n: { locale: "pt-BR", phoneNumberFormattingRegionCode: "BR" },
+};
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

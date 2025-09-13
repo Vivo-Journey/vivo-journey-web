@@ -12,10 +12,12 @@ import '../assets/css/menu.css';
 import { useEffect, useState } from "react";
 import { get } from "../utils/api";
 import { Avatar } from "@telefonica/mistica";
+import { useNavigate } from 'react-router-dom'
 
 export default function Menu() {
 
     const [user, setUser] = useState(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         get("/usuarios/1").then((data) => setUser(data));
@@ -30,20 +32,20 @@ export default function Menu() {
                     <p>Minimizar</p>
                 </div>
                 <div className="menu-info-perfil">
-                    <Avatar size={50} backgroundColor={"var(--cor-roxo-escuro)"}/>
+                    <Avatar size={50} backgroundColor={"var(--cor-roxo-escuro)"} />
                     <p>{user?.nome_completo || "Nome Completo"}</p>
                 </div>
             </div>
             <div className="menu-container-options">
                 <div className="menu-options" id="option-principal">
-                    <div className="menu-option">
+                    <button className="menu-option" onClick={() => navigate("/")}>
                         <img src={iconHome} alt='Icone de Home' />
                         <p>Geral</p>
-                    </div>
-                    <div className="menu-option">
-                        <img src={iconTrilhas} alt='Icone de Home' />
-                        <p>Minhas Trilhas</p>
-                    </div>
+                    </button>
+                    <button className="menu-option" onClick={() => navigate("/MinhasTrilhas")}>
+                            <img src={iconTrilhas} alt='Icone de Home' />
+                            <p>Minhas Trilhas</p>
+                    </button>
                     <div className="menu-option">
                         <img src={iconCertificados} alt='Icone de Home' />
                         <p>Meus Certificados</p>

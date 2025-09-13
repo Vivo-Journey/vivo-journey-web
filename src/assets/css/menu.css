@@ -1,6 +1,7 @@
 .container-menu{
     /* width: 50vh; */
-    height: 100%;
+    /* ajustar altura automática */
+    height: 1000px;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -74,4 +75,5 @@
 
 .menu-option p{
     margin-left: 3%;
+    font-size: 16px;
 }
