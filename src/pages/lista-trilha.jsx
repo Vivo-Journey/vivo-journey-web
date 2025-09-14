@@ -4,37 +4,56 @@ import {
   ButtonSecondary,
   Grid,
   GridItem,
+  Inline,
   Meter,
   NavigationBreadcrumbs,
   ResponsiveLayout,
   SearchField,
   Stack,
   Table,
+  Text,
   Title4
 } from "@telefonica/mistica";
+import { useEffect, useState } from "react";
+import '../assets/css/dashboard.css';
+import '../assets/css/global.css';
 import Menu from "../components/menu";
-
-// const ListaTrilha = (props) => {
-//   const [trilhas, setTrilhas] = useState([{}]);
-
-//   const { idUsuario } = props;
-
-//   useEffect(() => {
-//     get(`/usuarios/${idUsuario}/trilhas`).then((data) => setTrilhas(data));
-//   }, [idUsuario]);
-
-//   console.log(trilhas);
+import { get } from "../utils/api";
 
 const ListaTrilha = () => {
+
+  const [trilhas, setTrilhas] = useState([]);
+  const [trilhasFiltradas, setTrilhasFiltradas] = useState([]);
+  const [filtroNomeTrilha, setFiltroNomeTrilha] = useState("");
+
+  useEffect(() => {
+    get("/vivo-journey/usuarios/3/trilhas").then((data) => {
+      setTrilhas(data);
+      setTrilhasFiltradas(data);
+    });
+  }, []);
+
+
+  const buscarTrilhaPorFiltro = () => {
+    const filtradas = trilhas?.filter((trilha) => {
+      if (!filtroNomeTrilha) return true;
+
+      const regex = new RegExp(filtroNomeTrilha, 'i');
+
+      return regex.test(trilha?.nome);
+    });
+
+    setTrilhasFiltradas(filtradas);
+  };
+
   return (
     <ResponsiveLayout fullWidth>
       <Grid columns={12}>
-        <GridItem columnSpan={2}>
+        <GridItem columnSpan={3}>
           <Menu />
         </GridItem>
-        <GridItem columnSpan={10}>
+        <GridItem columnSpan={9}>
           <Box padding={32}>
-
             <Stack space={32}>
               <NavigationBreadcrumbs
                 breadcrumbs={[{ title: "Dashboard", url: "/dashboard" }]}
@@ -43,10 +62,10 @@ const ListaTrilha = () => {
 
               <Grid columns={12} gap={12} alignItems="baseline">
                 <GridItem columnSpan={10}>
-                  <SearchField name="search" label="Consulte uma Trilha" fullWidth />
+                  <SearchField name="nomeTrilha" label="Consulte o Nome da Trilha" onChangeValue={(nomeTrilha) => { setFiltroNomeTrilha(nomeTrilha) }} fullWidth />
                 </GridItem>
                 <GridItem columnSpan={2}>
-                  <ButtonPrimary onPress={() => { }}>Buscar</ButtonPrimary>
+                  <ButtonPrimary onPress={() => { buscarTrilhaPorFiltro() }}>Buscar</ButtonPrimary>
                 </GridItem>
               </Grid>
 
@@ -59,102 +78,65 @@ const ListaTrilha = () => {
                     boxed
                     heading={[
                       "Id Trilha",
-                      "Descrição",
+                      "Nome",
                       "Data Início",
                       "Data Prev. Fim",
                       "Progresso",
                     ]}
-                    content={[
-                      {
-                        cells: [
-                          "1",
-                          "Trilha 1",
-                          "10/09/2025",
-                          "20/09/2025",
-                          <Meter colors={["#F266A7"]} width={200} type="linear" values={[70, 0, 0]} />,
-                          <ButtonSecondary style={{ backgroundColor: "#FDE6F9", borderColor: "#F266A7", color: "#F266A7" }} small onPress={() => alert("Acessar Trilha 1")}>
-                            Acessar
-                          </ButtonSecondary>,
-                        ],
-                        actions: [],
-                      },
-                      {
-                        cells: [
-                          "1",
-                          "Trilha 1",
-                          "10/09/2025",
-                          "20/09/2025",
-                          <Meter colors={["#F266A7"]} width={200} type="linear" values={[70, 0, 0]} />,
-                          <ButtonSecondary style={{ backgroundColor: "#FDE6F9", borderColor: "#F266A7", color: "#F266A7" }} small onPress={() => alert("Acessar Trilha 1")}>
-                            Acessar
-                          </ButtonSecondary>,
-                        ],
-                        actions: [],
-                      },
-                      {
-                        cells: [
-                          "1",
-                          "Trilha 1",
-                          "10/09/2025",
-                          "20/09/2025",
-                          <Meter colors={["#F266A7"]} width={200} type="linear" values={[70, 0, 0]} />,
-                          <ButtonSecondary style={{ backgroundColor: "#FDE6F9", borderColor: "#F266A7", color: "#F266A7" }} small onPress={() => alert("Acessar Trilha 1")}>
-                            Acessar
-                          </ButtonSecondary>,
-                        ],
-                        actions: [],
-                      },
-                      {
-                        cells: [
-                          "1",
-                          "Trilha 1",
-                          "10/09/2025",
-                          "20/09/2025",
-                          <Meter colors={["#F266A7"]} width={200} type="linear" values={[70, 0, 0]} />,
-                          <ButtonSecondary style={{ backgroundColor: "#FDE6F9", borderColor: "#F266A7", color: "#F266A7" }} small onPress={() => alert("Acessar Trilha 1")}>
-                            Acessar
-                          </ButtonSecondary>,
-                        ],
-                        actions: [],
-                      },
-                      {
-                        cells: [
-                          "1",
-                          "Trilha 1",
-                          "10/09/2025",
-                          "20/09/2025",
-                          <Meter colors={["#F266A7"]} width={200} type="linear" values={[70, 0, 0]} />,
-                          <ButtonSecondary style={{ backgroundColor: "#FDE6F9", borderColor: "#F266A7", color: "#F266A7" }} small onPress={() => alert("Acessar Trilha 1")}>
-                            Acessar
-                          </ButtonSecondary>,
-                        ],
-                        actions: [],
-                      },
-                      {
-                        cells: [
-                          "1",
-                          "Trilha 1",
-                          "10/09/2025",
-                          "20/09/2025",
-                          <Meter colors={["#F266A7"]} width={200} type="linear" values={[70, 0, 0]} />,
-                          <ButtonSecondary style={{ backgroundColor: "#FDE6F9", borderColor: "#F266A7", color: "#F266A7" }} small onPress={() => alert("Acessar Trilha 1")}>
-                            Acessar
-                          </ButtonSecondary>,
-                        ],
-                        actions: [],
-                      },
-                    ]}
+                    content={trilhasFiltradas?.map((trilha) => ({
+                      cells: [
+                        trilha.id_trilha,
+                        trilha.nome,
+                        trilha.data_inicio,
+                        trilha.data_prevista_fim,
+                        <>
+                          <Inline space={16} alignItems="center">
+                            <Meter
+                              colors={["var(--cor-rosa-chiclete)", "#B292C8"]}
+                              type="linear"
+                              width={200}
+                              values={[trilha.percentual_progresso, 100 - trilha.percentual_progresso, 0]}
+                            />
+                            <Text>
+                              {formatarPercentual(trilha.percentual_progresso)}
+                            </Text>
+                          </Inline>
+
+                        </>
+                        ,
+                        <ButtonSecondary
+                          style={{
+                            backgroundColor: "#FDE6F9",
+                            borderColor: "var(--cor-rosa-chiclete)",
+                            color: "var(--cor-rosa-chiclete)",
+                          }}
+                          small
+                          onPress={() => alert(`Acessar ${trilha.nome}`)}
+                        >
+                          Acessar
+                        </ButtonSecondary>,
+                      ],
+                      actions: [],
+                    }))}
                   />
                 </GridItem>
               </Grid>
             </Stack>
-
-
           </Box>
         </GridItem>
       </Grid >
     </ResponsiveLayout>
   );
 };
+
+
+const formatarPercentual = (p) => {
+  const texto = `${p}%`;
+
+  if (p === 100) return texto;
+  if (p >= 10) return ' ' + texto;
+  return '  ' + texto;
+}
+
 
 export default ListaTrilha;
