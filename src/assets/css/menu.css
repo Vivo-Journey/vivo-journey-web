@@ -33,20 +33,6 @@
     margin-left: 2%;
 }
 
-.menu-info-perfil{
-    display: flex;
-    align-items: center;
-    color: #262626;
-}
-
-.menu-info-perfil img{
-    width: 5vh;
-}
-
-.menu-info-perfil p{
-    margin-left: 3%;
-}
-
 .menu-container-options{
     background-color: #FFFFFF;
     width: 100%;
@@ -69,7 +55,7 @@
 
 .menu-option{
     display: flex;
-    color: #262626;;
+    color: #262626;
 }
 
 .menu-option p{
