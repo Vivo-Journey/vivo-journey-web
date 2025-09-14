@@ -1,11 +1,13 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/dashboard";
+import ListaTrilha from "./pages/lista-trilha";
 
 const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/lista-trilhas" element={<ListaTrilha />} />
     </Routes>
   </BrowserRouter>
 );
