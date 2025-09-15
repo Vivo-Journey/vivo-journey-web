@@ -4,11 +4,6 @@
     background-color: #F0EDFF;
 }
 
-.dash-container{
-    padding: 5% 5%;
-    width: 100%;
-}
-
 .cards-trilhas{
     display: flex;
     justify-content:space-between;

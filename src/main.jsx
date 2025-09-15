@@ -1,8 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
 
-import '@telefonica/mistica/css/mistica.css'
+import "@telefonica/mistica/css/mistica.css";
 
 import {
   ThemeContextProvider,
@@ -15,11 +15,10 @@ const misticaTheme = {
   i18n: { locale: "pt-BR", phoneNumberFormattingRegionCode: "BR" },
 };
 
-
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeContextProvider theme={misticaTheme}>
       <App />
     </ThemeContextProvider>
   </React.StrictMode>
-)
+);

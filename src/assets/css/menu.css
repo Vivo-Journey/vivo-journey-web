@@ -1,13 +1,29 @@
-.container-menu{
-    /* width: 50vh; */
+.display-menu {
+    height: 100vh;
+    width: 50vh;
+    display: block;
+}
+
+.container-menu-block {
+    height: 100vh;
+    width: 50vh;
+        /* width: 50vh; */
     /* ajustar altura automática */
     height: 1000px;
+    display: block;
+    position: fixed;
+    background-color: #fff;
+}
+
+.container-menu-flex {
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: start;
+    background-color: #fff;
 }
 
-.menu-padding{
+.menu-padding {
     height: 27%;
     padding: 5% 5%;
     display: flex;
@@ -16,12 +32,12 @@
     background-color: #F6F6F6;
 }
 
-.img-logo-menu{
+.img-logo-menu {
     width: 30%;
     justify-content: flex-start;
 }
 
-.menu-text-minimize{
+.menu-text-minimize {
     height: 8vh;
     display: flex;
     align-items: center;
@@ -30,25 +46,11 @@
     font-size: 14px;
 }
 
-.menu-text-minimize p{
+.menu-text-minimize p {
     margin-left: 2%;
 }
 
-.menu-info-perfil{
-    display: flex;
-    align-items: center;
-    color: #262626;
-}
-
-.menu-info-perfil img{
-    width: 5vh;
-}
-
-.menu-info-perfil p{
-    margin-left: 3%;
-}
-
-.menu-container-options{
+.menu-container-options {
     background-color: #FFFFFF;
     width: 100%;
     height: 100%;
@@ -58,22 +60,30 @@
     justify-content: space-between;
 }
 
-.menu-options{
+.menu-options {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-#option-principal{
-    height:45%;
+#option-principal {
+    /* padding: 2% 2%; */
+    height: 45%;
 }
 
-.menu-option{
+.menu-option {
+    padding: 5% 5%;
     display: flex;
-    color: #262626;;
+    color: #262626;
 }
 
-.menu-option p{
+.menu-option p {
     margin-left: 3%;
     font-size: 16px;
+}
+
+.menu-option-logout {
+    margin-top: auto;
+    display: flex;
+    color: #262626;
 }

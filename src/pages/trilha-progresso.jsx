@@ -1,9 +1,63 @@
-import { ButtonPrimary, CoverCard, Grid, GridItem, IconCheckFilled, IconSuccess, IconWinnerRegular, Stepper, Tag, Text, Tooltip } from '@telefonica/mistica';
+import { ButtonLink, ButtonPrimary, CoverCard, Grid, GridItem, IconWinnerRegular, Inline, Stepper, Tag, Text, Tooltip } from '@telefonica/mistica';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../assets/css/global.css';
 import '../assets/css/trilha-progresso.css';
 import Menu from "../components/menu";
+import { get } from '../utils/api';
 
 export default function TrilhaProgresso() {
+    const location = useLocation();
+    const { idTrilha } = location.state || {};
+
+    const [modulos, setModulos] = useState([]);
+
+    useEffect(() => {
+        if (!idTrilha) return;
+        get(`/vivo-journey/usuarios/3/trilhas/${idTrilha}/modulos`).then((data) => {
+            setModulos(data);
+        });
+    }, [idTrilha]);
+
+    console.log('modulos', modulos);
+
+    const currentIndex = (() => {
+        const indexEmAndamento = modulos.findIndex(m => m.status.toLowerCase() === "em andamento");
+        if (indexEmAndamento !== -1) return indexEmAndamento;
+
+        const indexPendente = modulos.findIndex(m => m.status.toLowerCase() === "pendente");
+        if (indexPendente !== -1) return indexPendente;
+
+        return modulos.length > 0 ? modulos.length - 1 : 0;
+    })();
+
+    const steps = modulos.map((modulo, index) => (
+        <Tooltip
+            key={modulo.id_modulo}
+            width={350}
+            target={
+                <Text style={{ fontWeight: modulo.status === "Concluído" ? "bold" : "normal" }}>
+                    {`Módulo ${index + 1}`}
+                </Text>
+            }
+            description={
+                <>
+                    <Inline space={8} alignItems="center">
+                        <IconWinnerRegular color={modulo.status === "Concluído" ? "#55038C" : "#B292C8"} />
+                        <Text>{modulo.descricao}</Text>
+                    </Inline>
+
+                    {/* botão alinhado à direita */}
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "8px" }}>
+                        <ButtonLink small href="https://google.com">
+                            Acessar Módulo
+                        </ButtonLink>
+                    </div>
+                </>
+
+            }
+        />
+    ));
 
     return (
         <div className="tela-trilha">
@@ -22,30 +76,19 @@ export default function TrilhaProgresso() {
                                 entendendo como nossa paixão por inovar e conectar pessoas molda o nosso dia a dia."
                                 imageSrc="https://picsum.photos/1200/1200"
                                 buttonPrimary={
-                                    //alterar link de destino
                                     <ButtonPrimary small href="https://google.com">
                                         Continuar
                                     </ButtonPrimary>
                                 }
                             />
                         </div>
-                        <Stepper
-                            currentIndex={2}
-                            steps={[
-                                <Tooltip target={<Text>Módulo 1</Text>} description={
-                                    <><IconWinnerRegular color='#55038C'/>
-                                    <span> Conteúdo do primeiro módulo</span></>} />,
-                                <Tooltip target={<Text>Módulo 2</Text>} description={
-                                    <><IconWinnerRegular color='#55038C'/>
-                                    <span> Conteúdo dp segundo módulo</span></>} />,
-                                <Tooltip target={<Text>Módulo 3</Text>} description={
-                                    <><IconWinnerRegular color='#55038C'/>
-                                    <span> Conteúdo do terceiro módulo</span></>} />,
-                                <Tooltip target={<Text>Módulo 4</Text>} description={
-                                    <><IconWinnerRegular color='#55038C'/>
-                                    <span> Conteúdo do quarto módulo</span></>} />,
-                            ]}
-                        />
+
+                        {modulos.length > 0 && (
+                            <Stepper
+                                currentIndex={currentIndex}
+                                steps={steps}
+                            />
+                        )}
                     </div>
                 </GridItem>
             </Grid>
