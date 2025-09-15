@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/dashboard";
 import TrilhaProgresso from "./pages/trilha-progresso";
 import ListaTrilha from "./pages/lista-trilha";
+import ListaDocumentos from "./pages/lista-documentos";
 
 const App = () => (
   <BrowserRouter>
@@ -10,6 +11,7 @@ const App = () => (
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/lista-trilhas" element={<ListaTrilha />} />
       <Route path="/trilha-progresso" element={<TrilhaProgresso />} />
+      <Route path="/documentos" element={<ListaDocumentos />} />
     </Routes>
   </BrowserRouter>
 );
