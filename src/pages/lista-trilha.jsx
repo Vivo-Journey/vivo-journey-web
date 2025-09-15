@@ -15,11 +15,11 @@ import {
   Title4
 } from "@telefonica/mistica";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import '../assets/css/dashboard.css';
 import '../assets/css/global.css';
 import Menu from "../components/menu";
 import { get } from "../utils/api";
-import { useNavigate } from "react-router-dom";
 
 const ListaTrilha = () => {
 
@@ -47,6 +47,15 @@ const ListaTrilha = () => {
 
     setTrilhasFiltradas(filtradas);
   };
+
+  const formatarPercentual = (p) => {
+    const texto = `${p}%`;
+
+    if (p === 100) return texto;
+    if (p >= 10) return ' ' + texto;
+    return '  ' + texto;
+  }
+
 
   return (
     <ResponsiveLayout fullWidth>
@@ -131,15 +140,5 @@ const ListaTrilha = () => {
     </ResponsiveLayout>
   );
 };
-
-
-const formatarPercentual = (p) => {
-  const texto = `${p}%`;
-
-  if (p === 100) return texto;
-  if (p >= 10) return ' ' + texto;
-  return '  ' + texto;
-}
-
 
 export default ListaTrilha;
