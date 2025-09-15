@@ -92,7 +92,7 @@ export default function TrilhaProgresso() {
                         <Box padding={32}>
                             <Stack space={64}>
                                 <NavigationBreadcrumbs
-                                    breadcrumbs={[{ title: "Dashboard", url: "/dashboard" }, { title: "Minhas Trilhas", url: "/lista-trilha" }, { title: "Progresso da Trilha", url: "/trilha-progresso" }]}
+                                    breadcrumbs={[{ title: "Dashboard", url: "/dashboard" }, { title: "Minhas Trilhas", url: "/lista-trilhas" }, { title: "Progresso da Trilha", url: "/trilha-progresso" }]}
                                 />
                                 <Title4>Progresso da Trilha</Title4>
 
