@@ -56,7 +56,7 @@ const ListaTrilha = () => {
           <Box padding={32}>
             <Stack space={32}>
               <NavigationBreadcrumbs
-                breadcrumbs={[{ title: "Dashboard", url: "/dashboard" }]}
+                breadcrumbs={[{ title: "Dashboard", url: "/dashboard" }, { title: "Minhas Trilhas", url: "/lista-trilha" }]}
               />
               <Title4>Suas Trilhas</Title4>
 
@@ -73,7 +73,7 @@ const ListaTrilha = () => {
               <Box height={32} />
 
               <Grid columns={12}>
-                <GridItem columnSpan={10}>
+                <GridItem columnSpan={11}>
                   <Table
                     boxed
                     heading={[
@@ -82,6 +82,7 @@ const ListaTrilha = () => {
                       "Data Início",
                       "Data Prev. Fim",
                       "Progresso",
+                      ""
                     ]}
                     content={trilhasFiltradas?.map((trilha) => ({
                       cells: [
