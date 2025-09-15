@@ -114,7 +114,7 @@ const ListaTrilha = () => {
                             color: "var(--cor-rosa-chiclete)",
                           }}
                           small
-                          onPress={() => navigate("/lista-trilhas/detalhes", { state: { idTrilha: trilha?.id_trilha } })}
+                          onPress={() => navigate("/trilha-progresso", { state: { idTrilha: trilha?.id_trilha } })}
                         >
                           Acessar
                         </ButtonSecondary>,

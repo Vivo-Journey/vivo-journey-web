@@ -26,4 +26,5 @@
 
 body {
     background-color: var(--cor-lilas);
+    background-image: url('../img/fundo-tela-trilha.png');
 }

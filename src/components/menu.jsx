@@ -60,13 +60,9 @@ export default function Menu() {
                             <img src={iconHelp} alt='Icone de Home' />
                             <p>Ajuda</p>
                         </div>
-                    </div>
-                    <div className="menu-options">
                         <div className="menu-option">
-                            <div className="menu-option-logout">
-                                <img src={iconLogout} alt='Icone de Home' />
-                                <p>Logout</p>
-                            </div>
+                            <img src={iconLogout} alt='Icone de Home' />
+                            <p>Logout</p>
                         </div>
                     </div>
                 </div>
