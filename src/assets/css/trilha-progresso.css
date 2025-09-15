@@ -1,0 +1,18 @@
+.trilha-container{
+    padding: 5% 5%;
+    width: 90%;
+    height: 100vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.trilha-banner{
+    display: flex;
+    justify-content: center;
+}
+
+.trilha-steps {
+    padding: 5%;
+}

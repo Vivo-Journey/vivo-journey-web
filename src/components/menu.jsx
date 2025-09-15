@@ -1,4 +1,6 @@
 import { Avatar, Inline, Text } from "@telefonica/mistica";
+import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import '../assets/css/global.css';
 import '../assets/css/menu.css';
 import logoVivoMenu from "../assets/img/VivoLogoMenu.svg";
@@ -9,12 +11,12 @@ import iconHelp from "../assets/img/icon-help.svg";
 import iconHome from "../assets/img/icon-home.svg";
 import iconLogout from "../assets/img/icon-logout.svg";
 import iconTrilhas from "../assets/img/icon-trilhas.svg";
-import { useEffect, useState } from "react";
 import { get } from "../utils/api";
 
 export default function Menu() {
 
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         get("/vivo-journey/usuarios/3").then((data) => setUser(data));
@@ -32,20 +34,20 @@ export default function Menu() {
                         <p>Minimizar</p>
                     </div>
                     <Inline space={0} alignItems="baseline">
-                        <Avatar size={64} initials={usuario?.primeiro_nome?.[0] + usuario?.ultimo_nome?.[0]} />
+                        <Avatar size={64} backgroundColor={"var(--cor-roxo-escuro)"} initials={usuario?.primeiro_nome?.[0] + usuario?.ultimo_nome?.[0]} />
                         <Text color="#262626">{usuario?.primeiro_nome + ' ' + usuario?.ultimo_nome}</Text>
                     </Inline>
                 </div>
                 <div className="menu-container-options">
                     <div className="menu-options" id="option-principal">
-                        <div className="menu-option">
+                        <button className="menu-option" onClick={() => navigate("/dashboard")}>
                             <img src={iconHome} alt='Icone de Home' />
                             <p>Geral</p>
-                        </div>
-                        <div className="menu-option">
+                        </button>
+                        <button className="menu-option" onClick={() => navigate("/lista-trilhas")}>
                             <img src={iconTrilhas} alt='Icone de Home' />
                             <p>Minhas Trilhas</p>
-                        </div>
+                        </button>
                         <div className="menu-option">
                             <img src={iconCertificados} alt='Icone de Home' />
                             <p>Meus Certificados</p>
@@ -58,13 +60,9 @@ export default function Menu() {
                             <img src={iconHelp} alt='Icone de Home' />
                             <p>Ajuda</p>
                         </div>
-                    </div>
-                    <div className="menu-options">
                         <div className="menu-option">
-                            <div className="menu-option-logout">
-                                <img src={iconLogout} alt='Icone de Home' />
-                                <p>Logout</p>
-                            </div>
+                            <img src={iconLogout} alt='Icone de Home' />
+                            <p>Logout</p>
                         </div>
                     </div>
                 </div>

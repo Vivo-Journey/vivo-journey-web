@@ -19,12 +19,14 @@ import '../assets/css/dashboard.css';
 import '../assets/css/global.css';
 import Menu from "../components/menu";
 import { get } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const ListaTrilha = () => {
 
   const [trilhas, setTrilhas] = useState([]);
   const [trilhasFiltradas, setTrilhasFiltradas] = useState([]);
   const [filtroNomeTrilha, setFiltroNomeTrilha] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     get("/vivo-journey/usuarios/3/trilhas").then((data) => {
@@ -86,20 +88,20 @@ const ListaTrilha = () => {
                     ]}
                     content={trilhasFiltradas?.map((trilha) => ({
                       cells: [
-                        trilha.id_trilha,
-                        trilha.nome,
-                        trilha.data_inicio,
-                        trilha.data_prevista_fim,
+                        trilha?.id_trilha,
+                        trilha?.nome,
+                        trilha?.data_inicio,
+                        trilha?.data_prevista_fim,
                         <>
                           <Inline space={16} alignItems="center">
                             <Meter
                               colors={["var(--cor-rosa-chiclete)", "#B292C8"]}
                               type="linear"
                               width={200}
-                              values={[trilha.percentual_progresso, 100 - trilha.percentual_progresso, 0]}
+                              values={[trilha?.percentual_progresso, 100 - trilha?.percentual_progresso, 0]}
                             />
                             <Text>
-                              {formatarPercentual(trilha.percentual_progresso)}
+                              {formatarPercentual(trilha?.percentual_progresso)}
                             </Text>
                           </Inline>
 
@@ -112,7 +114,7 @@ const ListaTrilha = () => {
                             color: "var(--cor-rosa-chiclete)",
                           }}
                           small
-                          onPress={() => alert(`Acessar ${trilha.nome}`)}
+                          onPress={() => navigate("/trilha-progresso", { state: { idTrilha: trilha?.id_trilha } })}
                         >
                           Acessar
                         </ButtonSecondary>,
