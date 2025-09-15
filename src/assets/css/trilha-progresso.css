@@ -1,10 +1,3 @@
-.tela-trilha{
-    width: 100%;
-    height: 110%;
-    background-color: #F0EDFF;
-    background-image: url('../img/fundo-tela-trilha.png');
-}
-
 .trilha-container{
     padding: 5% 5%;
     width: 90%;

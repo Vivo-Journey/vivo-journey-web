@@ -1,4 +1,4 @@
-import { ButtonLink, ButtonPrimary, CoverCard, EmptyState, Grid, GridItem, IconWinnerRegular, Inline, Stepper, Tag, Text, Tooltip } from '@telefonica/mistica';
+import { Box, ButtonLink, ButtonPrimary, CoverCard, EmptyState, Grid, GridItem, IconWinnerRegular, Inline, NavigationBreadcrumbs, Stack, Stepper, Tag, Text, Title4, Tooltip } from '@telefonica/mistica';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../assets/css/global.css';
@@ -89,30 +89,38 @@ export default function TrilhaProgresso() {
                         <Menu />
                     </GridItem>
                     <GridItem columnSpan={9}>
-                        <div className='trilha-container'>
-                            <div className='trilha-banner'>
-                                <CoverCard width={"100vh"} height={"45vh"}
-                                    size="display"
-                                    headline={<Tag type="promo">Cultura da Empresa</Tag>}
-                                    title="Eco Sistema Vivo"
-                                    description="Conheça os valores e a história da Vivo, 
-                            entendendo como nossa paixão por inovar e conectar pessoas molda o nosso dia a dia."
-                                    imageSrc="https://picsum.photos/1200/1200"
-                                    buttonPrimary={
-                                        <ButtonPrimary small href="https://google.com">
-                                            Continuar
-                                        </ButtonPrimary>
-                                    }
+                        <Box padding={32}>
+                            <Stack space={32}>
+                                <NavigationBreadcrumbs
+                                    breadcrumbs={[{ title: "Dashboard", url: "/dashboard" }, { title: "Minhas Trilhas", url: "/lista-trilha" }, { title: "Progresso da Trilha", url: "/trilha-progresso" }]}
                                 />
-                            </div>
+                                <Title4>Progresso da Trilha</Title4>
 
-                            {modulos.length > 0 && (
-                                <Stepper
-                                    currentIndex={currentIndex}
-                                    steps={steps}
-                                />
-                            )}
-                        </div>
+
+                                <div className='trilha-banner'>
+                                    <CoverCard width={"100vh"} height={"45vh"}
+                                        size="display"
+                                        headline={<Tag type="promo">Cultura da Empresa</Tag>}
+                                        title="Eco Sistema Vivo"
+                                        description="Conheça os valores e a história da Vivo, 
+                            entendendo como nossa paixão por inovar e conectar pessoas molda o nosso dia a dia."
+                                        imageSrc="https://picsum.photos/1200/1200"
+                                        buttonPrimary={
+                                            <ButtonPrimary small href="https://google.com">
+                                                Continuar
+                                            </ButtonPrimary>
+                                        }
+                                    />
+                                </div>
+
+                                {modulos.length > 0 && (
+                                    <Stepper
+                                        currentIndex={currentIndex}
+                                        steps={steps}
+                                    />
+                                )}
+                            </Stack>
+                        </Box>
                     </GridItem>
                 </Grid>
             </div>
