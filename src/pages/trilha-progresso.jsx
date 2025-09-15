@@ -90,12 +90,11 @@ export default function TrilhaProgresso() {
                     </GridItem>
                     <GridItem columnSpan={9}>
                         <Box padding={32}>
-                            <Stack space={32}>
+                            <Stack space={64}>
                                 <NavigationBreadcrumbs
                                     breadcrumbs={[{ title: "Dashboard", url: "/dashboard" }, { title: "Minhas Trilhas", url: "/lista-trilha" }, { title: "Progresso da Trilha", url: "/trilha-progresso" }]}
                                 />
                                 <Title4>Progresso da Trilha</Title4>
-
 
                                 <div className='trilha-banner'>
                                     <CoverCard width={"100vh"} height={"45vh"}
@@ -112,14 +111,17 @@ export default function TrilhaProgresso() {
                                         }
                                     />
                                 </div>
-
+                            </Stack>
+                            <div className="trilha-steps">
                                 {modulos.length > 0 && (
                                     <Stepper
                                         currentIndex={currentIndex}
                                         steps={steps}
                                     />
                                 )}
-                            </Stack>
+                            </div>
+
+
                         </Box>
                     </GridItem>
                 </Grid>
