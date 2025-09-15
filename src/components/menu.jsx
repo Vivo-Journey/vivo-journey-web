@@ -40,7 +40,7 @@ export default function Menu() {
                 </div>
                 <div className="menu-container-options">
                     <div className="menu-options" id="option-principal">
-                        <button className="menu-option" onClick={() => navigate("/dashboard")}>
+                        <button className="menu-option" onClick={() => navigate("/")}>
                             <img src={iconHome} alt='Icone de Home' />
                             <p>Geral</p>
                         </button>
@@ -56,10 +56,10 @@ export default function Menu() {
                             <img src={iconDocs} alt='Icone de Home' />
                             <p>Documentos</p>
                         </div>
-                        <div className="menu-option">
+                        <button className="menu-option" onClick={() => navigate("/suporte")}>
                             <img src={iconHelp} alt='Icone de Home' />
                             <p>Ajuda</p>
-                        </div>
+                        </button>
                         <div className="menu-option">
                             <img src={iconLogout} alt='Icone de Home' />
                             <p>Logout</p>

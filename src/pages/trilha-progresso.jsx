@@ -102,7 +102,7 @@ export default function TrilhaProgresso() {
                                         headline={<Tag type="promo">Cultura da Empresa</Tag>}
                                         title="Eco Sistema Vivo"
                                         description="Conheça os valores e a história da Vivo, 
-                            entendendo como nossa paixão por inovar e conectar pessoas molda o nosso dia a dia."
+                                        entendendo como nossa paixão por inovar e conectar pessoas molda o nosso dia a dia."
                                         imageSrc="https://picsum.photos/1200/1200"
                                         buttonPrimary={
                                             <ButtonPrimary small href="https://google.com">
