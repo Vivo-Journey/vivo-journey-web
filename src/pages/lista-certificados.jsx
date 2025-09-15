@@ -21,33 +21,33 @@ import Menu from "../components/menu";
 import { get } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
-const ListaDocumentos = () => {
+const ListaCertificados = () => {
 
-  const [documentos, setDocumentos] = useState([]);
-  const [documentosFiltrados, setDocumentosFiltrados] = useState([]);
-  const [filtroTituloDocumento, setFiltroTituloDocumento] = useState("");
+  const [certificados, setCertificados] = useState([]);
+  const [certificadosFiltrados, setCertificadosFiltrados] = useState([]);
+  const [filtroNomeTrilha, setFiltroNomeTrilha] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    get("/vivo-journey/usuarios/3/documentos").then((data) => {
-      setDocumentos(data);
-      setDocumentosFiltrados(data);
+    get("/vivo-journey/usuarios/3/certificados").then((data) => {
+      setCertificados(data);
+      setCertificadosFiltrados(data);
     });
   }, []);
 
-  console.log('documentos', documentos);
+  console.log('documentos', certificados);
 
 
-  const buscarDocumentosPorFiltro = () => {
-    const filtradas = documentos?.filter((doc) => {
-      if (!filtroTituloDocumento) return true;
+  const buscarCertificadosPorFiltro = () => {
+    const filtradas = certificados?.filter((certif) => {
+      if (!filtroNomeTrilha) return true;
 
-      const regex = new RegExp(filtroTituloDocumento, 'i');
+      const regex = new RegExp(filtroNomeTrilha, 'i');
 
-      return regex.test(doc?.titulo);
+      return regex.test(certif?.trilha?.nome);
     });
 
-    setDocumentosFiltrados(filtradas);
+    setCertificadosFiltrados(filtradas);
   };
 
   return (
@@ -60,16 +60,16 @@ const ListaDocumentos = () => {
           <Box padding={32}>
             <Stack space={32}>
               <NavigationBreadcrumbs
-                breadcrumbs={[{ title: "Dashboard", url: "/dashboard" }, { title: "Documentos", url: "/lista-documentos" }]}
+                breadcrumbs={[{ title: "Dashboard", url: "/dashboard" }, { title: "Certificados", url: "/lista-certificados" }]}
               />
               <Title4>Suas Trilhas</Title4>
 
               <Grid columns={12} gap={12} alignItems="baseline">
                 <GridItem columnSpan={10}>
-                  <SearchField name="titulo" label="Consulte o Título do Documento" onChangeValue={(titulo) => { setFiltroTituloDocumento(titulo) }} fullWidth />
+                  <SearchField name="nomeTrilha" label="Consulte o Título da Trilha" onChangeValue={(nomeTrilha) => { setFiltroNomeTrilha(nomeTrilha) }} fullWidth />
                 </GridItem>
                 <GridItem columnSpan={2}>
-                  <ButtonPrimary onPress={() => { buscarDocumentosPorFiltro() }}>Buscar</ButtonPrimary>
+                  <ButtonPrimary onPress={() => { buscarCertificadosPorFiltro() }}>Buscar</ButtonPrimary>
                 </GridItem>
               </Grid>
 
@@ -81,16 +81,16 @@ const ListaDocumentos = () => {
                   <Table
                     boxed
                     heading={[
-                      "Id Doc.",
-                      "Título",
-                      "Descrição",
+                      "Id Certificado.",
+                      "Nome da Trilha",
+                      "Data Fim Trilha",
                       ""
                     ]}
-                    content={documentosFiltrados?.map((doc) => ({
+                    content={certificadosFiltrados?.map((certif) => ({
                       cells: [
-                        doc?.id_documento,
-                        doc?.titulo,
-                        doc?.descricao,
+                        certif?.id_certificado,
+                        certif?.trilha?.nome,
+                        certif?.trilha?.data_fim,
                         <ButtonSecondary
                           style={{
                             backgroundColor: "#FDE6F9",
@@ -98,9 +98,9 @@ const ListaDocumentos = () => {
                             color: "var(--cor-rosa-chiclete)",
                           }}
                           small
-                          onPress={() => Promise.resolve().then(() => window.open(doc.url_documento, "_blank"))}
+                          onPress={() => Promise.resolve().then(() => window.open(certif.url_pdf, "_blank"))}
                         >
-                          Visualizar Documento
+                          Visualizar Certificado
                         </ButtonSecondary>,
                       ],
                       actions: [],
@@ -116,4 +116,4 @@ const ListaDocumentos = () => {
   );
 };
 
-export default ListaDocumentos;
+export default ListaCertificados;
