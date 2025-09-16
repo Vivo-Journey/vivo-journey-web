@@ -85,7 +85,7 @@ const ListaDocumentos = () => {
                     color: "var(--cor-rosa-chiclete)",
                   }}
                   small
-                  onPress={() => window.open(doc.url_documento, "_blank")}
+                  onPress={() => Promise.resolve().then(() => window.open(doc.url_documento, "_blank"))}
                 >
                   Visualizar Documento
                 </ButtonSecondary>,

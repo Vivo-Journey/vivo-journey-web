@@ -85,7 +85,7 @@ const ListaCertificados = () => {
                     color: "var(--cor-rosa-chiclete)",
                   }}
                   small
-                  onPress={() => window.open(certif.url_pdf, "_blank")}
+                  onPress={() => Promise.resolve().then(() => window.open(certif.url_pdf, "_blank"))}
                 >
                   Visualizar Certificado
                 </ButtonSecondary>,
