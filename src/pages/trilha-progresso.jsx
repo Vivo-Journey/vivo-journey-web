@@ -4,6 +4,7 @@ import {
   ButtonPrimary,
   CoverCard,
   EmptyState,
+  IconWinnerRegular,
   Inline,
   NavigationBreadcrumbs,
   Stack,
@@ -50,29 +51,33 @@ export default function TrilhaProgresso() {
     return modulos.length > 0 ? modulos.length - 1 : 0;
   })();
 
-  const steps = modulos.map((modulo, index) => (
-    <Tooltip
-      key={modulo.id_modulo}
-      width={350}
-      target={
-        <Text style={{ fontWeight: modulo.status === "Concluído" ? "bold" : "normal" }}>
-          {`Módulo ${index + 1}`}
-        </Text>
-      }
-      description={
-        <>
-          <Inline space={8} alignItems="center">
-            <Text>{modulo.descricao}</Text>
-          </Inline>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "8px" }}>
-            <ButtonLink small href="https://google.com">
-              Acessar Módulo
-            </ButtonLink>
-          </div>
-        </>
-      }
-    />
-  ));
+    const steps = modulos.map((modulo, index) => (
+        <Tooltip
+            key={modulo.id_modulo}
+            width={350}
+            target={
+                <Text style={{ fontWeight: modulo.status === "Concluído" ? "bold" : "normal" }}>
+                    {`Módulo ${index + 1}`}
+                </Text>
+            }
+            description={
+                <>
+                    <Inline space={8} alignItems="center">
+                        <IconWinnerRegular color={modulo.status === "Concluído" ? "#55038C" : "#B292C8"} />
+                        <Text>{modulo.descricao}</Text>
+                    </Inline>
+
+                    {/* botão alinhado à direita */}
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "8px" }}>
+                        <ButtonLink small href="https://google.com">
+                            Acessar Módulo
+                        </ButtonLink>
+                    </div>
+                </>
+
+            }
+        />
+    ));
 
   // Layout principal
   return (
