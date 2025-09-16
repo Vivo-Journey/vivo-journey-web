@@ -101,9 +101,3 @@
 .menu-option:hover {
   background-color: #e5dbff;
 }
-
-@supports (display: flex) and (gap: 0px) {
-  .v16_37_5_kkfbnv9 > div:first-child {
-    margin-left: 0; 
-  }
-}
