@@ -62,7 +62,7 @@ const ListaTrilha = () => {
         <Stack space={32}>
           <NavigationBreadcrumbs
             breadcrumbs={[
-              { title: "Dashboard", url: "/" },
+              { title: "Dashboard", url: "/dashboard" },
               { title: "Minhas Trilhas", url: "/lista-trilhas" }
             ]}
           />
