@@ -2,16 +2,11 @@ import {
   Box,
   ButtonPrimary,
   ButtonSecondary,
-  Grid,
-  GridItem,
-  Inline,
-  Meter,
   NavigationBreadcrumbs,
   ResponsiveLayout,
   SearchField,
   Stack,
   Table,
-  Text,
   Title4
 } from "@telefonica/mistica";
 import { useEffect, useState } from "react";
@@ -22,10 +17,10 @@ import { get } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
 const ListaDocumentos = () => {
-
   const [documentos, setDocumentos] = useState([]);
   const [documentosFiltrados, setDocumentosFiltrados] = useState([]);
   const [filtroTituloDocumento, setFiltroTituloDocumento] = useState("");
+  const [menuCollapsed, setMenuCollapsed] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,83 +30,71 @@ const ListaDocumentos = () => {
     });
   }, []);
 
-  console.log('documentos', documentos);
-
-
   const buscarDocumentosPorFiltro = () => {
     const filtradas = documentos?.filter((doc) => {
       if (!filtroTituloDocumento) return true;
-
       const regex = new RegExp(filtroTituloDocumento, 'i');
-
       return regex.test(doc?.titulo);
     });
-
     setDocumentosFiltrados(filtradas);
   };
 
   return (
     <ResponsiveLayout fullWidth>
-      <Grid columns={12}>
-        <GridItem columnSpan={3}>
-          <Menu />
-        </GridItem>
-        <GridItem columnSpan={9}>
-          <Box padding={32}>
-            <Stack space={32}>
-              <NavigationBreadcrumbs
-                breadcrumbs={[{ title: "Dashboard", url: "/dashboard" }, { title: "Documentos", url: "/lista-documentos" }]}
+      <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
+      <div
+        style={{
+          marginLeft: menuCollapsed ? "72px" : "320px", // ajusta conforme o menu
+          transition: "margin-left 0.3s ease",
+          padding: "32px",
+        }}
+      >
+        <Stack space={32}>
+          <NavigationBreadcrumbs
+            breadcrumbs={[
+              { title: "Dashboard", url: "/dashboard" },
+              { title: "Documentos", url: "/lista-documentos" }
+            ]}
+          />
+          <Title4>Documentos Úteis</Title4>
+
+          <div style={{ display: "flex", gap: "12px", marginBottom: "32px" }}>
+            <div style={{ flex: 1 }}>
+              <SearchField
+                name="titulo"
+                label="Consulte o Título do Documento"
+                onChangeValue={(titulo) => setFiltroTituloDocumento(titulo)}
+                fullWidth
               />
-              <Title4>Suas Trilhas</Title4>
+            </div>
+            <ButtonPrimary onPress={buscarDocumentosPorFiltro}>Buscar</ButtonPrimary>
+          </div>
 
-              <Grid columns={12} gap={12} alignItems="baseline">
-                <GridItem columnSpan={10}>
-                  <SearchField name="titulo" label="Consulte o Título do Documento" onChangeValue={(titulo) => { setFiltroTituloDocumento(titulo) }} fullWidth />
-                </GridItem>
-                <GridItem columnSpan={2}>
-                  <ButtonPrimary onPress={() => { buscarDocumentosPorFiltro() }}>Buscar</ButtonPrimary>
-                </GridItem>
-              </Grid>
-
-              {/* Espaço entre search/grid e table */}
-              <Box height={32} />
-
-              <Grid columns={12}>
-                <GridItem columnSpan={11}>
-                  <Table
-                    boxed
-                    heading={[
-                      "Id Doc.",
-                      "Título",
-                      "Descrição",
-                      ""
-                    ]}
-                    content={documentosFiltrados?.map((doc) => ({
-                      cells: [
-                        doc?.id_documento,
-                        doc?.titulo,
-                        doc?.descricao,
-                        <ButtonSecondary
-                          style={{
-                            backgroundColor: "#FDE6F9",
-                            borderColor: "var(--cor-rosa-chiclete)",
-                            color: "var(--cor-rosa-chiclete)",
-                          }}
-                          small
-                          onPress={() => Promise.resolve().then(() => window.open(doc.url_documento, "_blank"))}
-                        >
-                          Visualizar Documento
-                        </ButtonSecondary>,
-                      ],
-                      actions: [],
-                    }))}
-                  />
-                </GridItem>
-              </Grid>
-            </Stack>
-          </Box>
-        </GridItem>
-      </Grid >
+          <Table
+            boxed
+            heading={["Id Doc.", "Título", "Descrição", ""]}
+            content={documentosFiltrados?.map((doc) => ({
+              cells: [
+                doc?.id_documento,
+                doc?.titulo,
+                doc?.descricao,
+                <ButtonSecondary
+                  style={{
+                    backgroundColor: "#FDE6F9",
+                    borderColor: "var(--cor-rosa-chiclete)",
+                    color: "var(--cor-rosa-chiclete)",
+                  }}
+                  small
+                  onPress={() => window.open(doc.url_documento, "_blank")}
+                >
+                  Visualizar Documento
+                </ButtonSecondary>,
+              ],
+              actions: [],
+            }))}
+          />
+        </Stack>
+      </div>
     </ResponsiveLayout>
   );
 };
