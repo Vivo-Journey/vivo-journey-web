@@ -52,7 +52,7 @@ const ListaCertificados = () => {
         <Stack space={32}>
           <NavigationBreadcrumbs
             breadcrumbs={[
-              { title: "Dashboard", url: "/dashboard" },
+              { title: "Dashboard", url: "/" },
               { title: "Certificados", url: "/lista-certificados" }
             ]}
           />
@@ -85,7 +85,7 @@ const ListaCertificados = () => {
                     color: "var(--cor-rosa-chiclete)",
                   }}
                   small
-                  onPress={() => window.open(certif.url_pdf, "_blank")}
+                  onPress={() => Promise.resolve().then(() => window.open(certif.url_pdf, "_blank"))}
                 >
                   Visualizar Certificado
                 </ButtonSecondary>,

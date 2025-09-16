@@ -1,0 +1,29 @@
+.help-container{
+    width: 85%;
+    height: 75vh;
+    margin: auto;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    border: 2px solid #55038C;
+    margin-top: 8%;
+    padding: 4% 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.help-container h1{
+    color: #55038C;
+    font-weight: normal;
+    font-size: 24px;
+}
+
+.help-input{
+    width: 100%;
+    border-radius: 20px;
+    border: 2px solid #55038C;
+}
+
+.help-btn-send{
+    border-radius: 20px;
+}

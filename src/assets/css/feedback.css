@@ -1,0 +1,38 @@
+.feedback-container{
+    width: 102%;
+    height: 100vh;
+    background-color: #e6e4f2;
+    background-image: url('../img/fundo-feedback.png');
+    background-size: contain;
+    margin-left: -2%;
+    padding: 4% 4%;
+}
+
+.feedback-conteudo{
+    width: 85%;
+    height: 85vh;
+    margin: auto;
+    padding: 4% 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.feedback-conteudo h1{
+    color: #55038C;
+    font-size: 32px;
+    font-weight: bolder;
+}
+
+.feedback-conteudo h2{
+    color: #55038C;
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 3%;
+}
+
+.item-avaliado{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
