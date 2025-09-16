@@ -52,7 +52,7 @@ const ListaDocumentos = () => {
         <Stack space={32}>
           <NavigationBreadcrumbs
             breadcrumbs={[
-              { title: "Dashboard", url: "/dashboard" },
+              { title: "Dashboard", url: "/" },
               { title: "Documentos", url: "/lista-documentos" }
             ]}
           />
