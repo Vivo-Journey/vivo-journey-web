@@ -92,7 +92,7 @@ const Menu = ({ collapsed, setCollapsed }) => {
           <div className="menu-options" id="option-principal">
             <button
               className="menu-option"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/")}
             >
               <IconHomeRegular size={20} />
               {!collapsed && <p>Geral</p>}

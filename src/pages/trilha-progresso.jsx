@@ -12,14 +12,14 @@ import {
   Tag,
   Text,
   Title4,
-  Tooltip
-} from '@telefonica/mistica';
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import '../assets/css/global.css';
-import '../assets/css/trilha-progresso.css';
+  Tooltip,
+} from "@telefonica/mistica";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import "../assets/css/global.css";
+import "../assets/css/trilha-progresso.css";
 import Menu from "../components/menu";
-import { get } from '../utils/api';
+import { get } from "../utils/api";
 
 export default function TrilhaProgresso() {
   const location = useLocation();
@@ -42,42 +42,57 @@ export default function TrilhaProgresso() {
   }, [idTrilha]);
 
   const currentIndex = (() => {
-    const indexEmAndamento = modulos?.findIndex(m => m.status.toLowerCase() === "em andamento");
+    const indexEmAndamento = modulos?.findIndex(
+      (m) => m.status.toLowerCase() === "em andamento"
+    );
     if (indexEmAndamento !== -1) return indexEmAndamento;
 
-    const indexPendente = modulos.findIndex(m => m.status.toLowerCase() === "pendente");
+    const indexPendente = modulos.findIndex(
+      (m) => m.status.toLowerCase() === "pendente"
+    );
     if (indexPendente !== -1) return indexPendente;
 
     return modulos.length > 0 ? modulos.length - 1 : 0;
   })();
 
-    const steps = modulos.map((modulo, index) => (
-        <Tooltip
-            key={modulo.id_modulo}
-            width={350}
-            target={
-                <Text style={{ fontWeight: modulo.status === "Concluído" ? "bold" : "normal" }}>
-                    {`Módulo ${index + 1}`}
-                </Text>
-            }
-            description={
-                <>
-                    <Inline space={8} alignItems="center">
-                        <IconWinnerRegular color={modulo.status === "Concluído" ? "#55038C" : "#B292C8"} />
-                        <Text>{modulo.descricao}</Text>
-                    </Inline>
+  const steps = modulos.map((modulo, index) => (
+    <Tooltip
+      key={modulo.id_modulo}
+      width={350}
+      target={
+        <Text
+          style={{
+            fontWeight: modulo.status === "Concluído" ? "bold" : "normal",
+          }}
+        >
+          {`Módulo ${index + 1}`}
+        </Text>
+      }
+      description={
+        <>
+          <Inline space={8} alignItems="center">
+            <IconWinnerRegular
+              color={modulo.status === "Concluído" ? "#55038C" : "#B292C8"}
+            />
+            <Text>{modulo.descricao}</Text>
+          </Inline>
 
-                    {/* botão alinhado à direita */}
-                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "8px" }}>
-                        <ButtonLink small href="https://google.com">
-                            Acessar Módulo
-                        </ButtonLink>
-                    </div>
-                </>
-
-            }
-        />
-    ));
+          {/* botão alinhado à direita */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "8px",
+            }}
+          >
+            <ButtonLink small href="https://google.com">
+              Acessar Módulo
+            </ButtonLink>
+          </div>
+        </>
+      }
+    />
+  ));
 
   // Layout principal
   return (
@@ -95,7 +110,11 @@ export default function TrilhaProgresso() {
             largeImageUrl="https://i.imgur.com/yGFKQOy.png"
             title="Sem Módulos"
             description="Esta trilha ainda não possuí módulos."
-            button={<ButtonPrimary onPress={() => navigate("/lista-trilhas")}>Voltar a Lista</ButtonPrimary>}
+            button={
+              <ButtonPrimary onPress={() => navigate("/lista-trilhas")}>
+                Voltar a Lista
+              </ButtonPrimary>
+            }
           />
         ) : (
           <Stack space={64}>
@@ -103,12 +122,12 @@ export default function TrilhaProgresso() {
               breadcrumbs={[
                 { title: "Dashboard", url: "/dashboard" },
                 { title: "Minhas Trilhas", url: "/lista-trilhas" },
-                { title: "Progresso da Trilha", url: "/trilha-progresso" }
+                { title: "Progresso da Trilha", url: "/trilha-progresso" },
               ]}
             />
             <Title4>Progresso da Trilha</Title4>
 
-            <div className='trilha-banner'>
+            <div className="trilha-banner">
               <CoverCard
                 width={"100vh"}
                 height={"45vh"}
