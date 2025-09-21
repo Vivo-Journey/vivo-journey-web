@@ -1,17 +1,10 @@
-import {
-  Avatar,
-  Box,
-  Meter,
-  ResponsiveLayout,
-  Title4,
-} from "@telefonica/mistica";
+import { Avatar, Meter, ResponsiveLayout, Title4 } from "@telefonica/mistica";
 import { useEffect, useState } from "react";
 import "../assets/css/dashboard.css";
 import "../assets/css/global.css";
-import imgFundo from "../assets/img/img-fundo-tela.svg";
-import { get } from "../utils/api";
-import Menu from "../components/menu";
 import Loading from "../components/loading";
+import Menu from "../components/menu";
+import { get } from "../utils/api";
 
 const Dashboard = ({ idUsuario = 3 }) => {
   const [user, setUser] = useState(null);
@@ -102,12 +95,6 @@ const Dashboard = ({ idUsuario = 3 }) => {
             </div>
           </div>
         </div>
-
-        <img
-          src={imgFundo}
-          className="dash-img-fundo"
-          alt="logo de fundo vivo"
-        />
       </div>
     </ResponsiveLayout>
   );
