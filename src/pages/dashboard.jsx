@@ -1,50 +1,64 @@
-import { Avatar, Meter, ResponsiveLayout, Title4 } from "@telefonica/mistica";
-import { useEffect, useState } from "react";
-import "../assets/css/dashboard.css";
-import "../assets/css/global.css";
-import Loading from "../components/loading";
-import Menu from "../components/menu";
-import { get } from "../utils/api";
+import { Avatar, Meter, ResponsiveLayout, Title4 } from '@telefonica/mistica'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import '../assets/css/dashboard.css'
+import '../assets/css/global.css'
+import Loading from '../components/loading'
+import Menu from '../components/menu'
+import { get } from '../utils/api'
 
-const Dashboard = ({ idUsuario = 3 }) => {
-  const [user, setUser] = useState(null);
-  const [trilhas, setTrilhas] = useState([]);
-  const [menuCollapsed, setMenuCollapsed] = useState(false);
+const Dashboard = ({ usuario }) => {
+  const [trilhas, setTrilhas] = useState([])
+  const [menuCollapsed, setMenuCollapsed] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    get(`/vivo-journey/usuarios/${idUsuario}`).then((data) => setUser(data));
-    get(`/vivo-journey/usuarios/${idUsuario}/trilhas`).then((data) =>
-      setTrilhas(data)
-    );
-  }, []);
+    // Redireciona para login se não houver usuário
+    if (!usuario) {
+      navigate('/')
+      return
+    }
+    console.log('usuario', usuario)
 
-  const buddy = user?.buddy;
-  const cargoBuddy = buddy?.cargo;
+    if (usuario?.id_usuario) {
+      get(`/vivo-journey/usuarios/${usuario.id_usuario}/trilhas`).then(data =>
+        setTrilhas(data)
+      )
+      console.log('trilhas', trilhas)
+    }
+  }, [usuario, navigate])
+
+  const buddy = usuario?.buddy
+  const cargoBuddy = buddy?.cargo
 
   return (
-    <ResponsiveLayout backgroundColor={"#F0EDFF"} fullWidth>
+    <ResponsiveLayout backgroundColor={'#F0EDFF'} fullWidth>
       <Loading />
-      <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
+      <Menu
+        collapsed={menuCollapsed}
+        setCollapsed={setMenuCollapsed}
+        usuario={usuario}
+      />
       <div
         style={{
-          marginLeft: menuCollapsed ? "72px" : "320px", // <-- MUDA CONFORME O MENU
-          transition: "margin-left 0.3s ease",
-          padding: "32px",
+          marginLeft: menuCollapsed ? '72px' : '320px', // <-- MUDA CONFORME O MENU
+          transition: 'margin-left 0.3s ease',
+          padding: '32px'
         }}
       >
         <Title4>Suas Trilhas</Title4>
 
         <div className="cards-trilhas">
-          {trilhas?.slice(0, 3).map((trilha) => (
+          {trilhas?.slice(0, 3).map(trilha => (
             <div className="dash-card-trilha" key={trilha?.id_trilha}>
               <Meter
-                colors={["var(--cor-rosa-chiclete)", "#B292C8"]}
+                colors={['var(--cor-rosa-chiclete)', '#B292C8']}
                 width={150}
                 type="circular"
                 values={[
                   trilha?.percentual_progresso,
                   100 - trilha?.percentual_progresso,
-                  0,
+                  0
                 ]}
               />
               <p>{trilha.percentual_progresso}%</p>
@@ -63,7 +77,7 @@ const Dashboard = ({ idUsuario = 3 }) => {
             <div className="buddy-infos">
               <div className="buddy-campo-info">
                 <h3>Nome</h3>
-                <span>{buddy?.primeiro_nome + " " + buddy?.ultimo_nome}</span>
+                <span>{buddy?.primeiro_nome + ' ' + buddy?.ultimo_nome}</span>
               </div>
               <div className="buddy-campo-info">
                 <h3>Cargo</h3>
@@ -97,7 +111,7 @@ const Dashboard = ({ idUsuario = 3 }) => {
         </div>
       </div>
     </ResponsiveLayout>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

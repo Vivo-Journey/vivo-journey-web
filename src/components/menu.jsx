@@ -9,31 +9,27 @@ import {
   IconQuestionRegular,
   IconStarRegular,
   Inline,
-  Text1,
-} from "@telefonica/mistica";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../assets/css/menu.css";
-import logoVivoMenu from "../assets/img/VivoLogoMenu.svg";
-import { get } from "../utils/api";
+  Text1
+} from '@telefonica/mistica'
+import { useNavigate } from 'react-router-dom'
+import '../assets/css/menu.css'
+import logoVivoMenu from '../assets/img/VivoLogoMenu.svg'
 
-const Menu = ({ collapsed, setCollapsed }) => {
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
+const Menu = ({ collapsed, setCollapsed, usuario }) => {
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    get("/vivo-journey/usuarios/3").then((data) => setUser(data));
-  }, []);
-
-  const usuario = user ?? { primeiro_nome: "Vivo", ultimo_nome: "Journey" };
+  const usuarioData = usuario ?? {
+    primeiro_nome: 'Vivo',
+    ultimo_nome: 'Journey'
+  }
 
   return (
     <div
-      className={`container-menu-block ${collapsed ? "collapsed" : ""}`}
+      className={`container-menu-block ${collapsed ? 'collapsed' : ''}`}
       style={{
-        width: collapsed ? "72px" : "320px",
-        transition: "width 0.3s ease",
-        overflow: "hidden",
+        width: collapsed ? '72px' : '320px',
+        transition: 'width 0.3s ease',
+        overflow: 'hidden'
       }}
     >
       <div className="container-menu-flex">
@@ -42,12 +38,12 @@ const Menu = ({ collapsed, setCollapsed }) => {
           {/* LOGO VIVO */}
           <div
             className="img-logo-menu"
-            style={{ justifyContent: collapsed ? "center" : "flex-start" }}
+            style={{ justifyContent: collapsed ? 'center' : 'flex-start' }}
           >
             <img
               src={logoVivoMenu}
               alt="Logo Vivo"
-              style={{ width: collapsed ? "32px" : "96px" }}
+              style={{ width: collapsed ? '32px' : '96px' }}
             />
           </div>
 
@@ -55,15 +51,15 @@ const Menu = ({ collapsed, setCollapsed }) => {
           <div
             className="menu-text-minimize"
             style={{
-              justifyContent: collapsed ? "center" : "flex-start",
+              justifyContent: collapsed ? 'center' : 'flex-start'
             }}
           >
             <button onClick={() => setCollapsed(!collapsed)}>
               {collapsed ? (
-                <IconChevronRightRegular color={"#6B6C6F"} size={20} />
+                <IconChevronRightRegular color={'#6B6C6F'} size={20} />
               ) : (
                 <>
-                  <IconChevronLeftRegular color={"#6B6C6F"} size={20} />
+                  <IconChevronLeftRegular color={'#6B6C6F'} size={20} />
                   <p>Minimizar</p>
                 </>
               )}
@@ -78,7 +74,7 @@ const Menu = ({ collapsed, setCollapsed }) => {
             />
             {!collapsed && (
               <Text1>
-                {usuario?.primeiro_nome + " " + usuario?.ultimo_nome}
+                {usuarioData?.primeiro_nome + ' ' + usuarioData?.ultimo_nome}
               </Text1>
             )}
           </Inline>
@@ -87,44 +83,54 @@ const Menu = ({ collapsed, setCollapsed }) => {
         {/* OPÇÕES */}
         <div
           className="menu-container-options"
-          style={{ alignItems: collapsed ? "center" : "" }}
+          style={{ alignItems: collapsed ? 'center' : '' }}
         >
           <div className="menu-options" id="option-principal">
             <button
               className="menu-option"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate('/dashboard')}
             >
               <IconHomeRegular size={20} />
               {!collapsed && <p>Geral</p>}
             </button>
             <button
               className="menu-option"
-              onClick={() => navigate("/lista-trilhas")}
+              onClick={() => navigate('/lista-trilhas')}
             >
               <IconDigitalLibraryRegular size={20} />
               {!collapsed && <p>Minhas Trilhas</p>}
             </button>
-            <button 
+            <button
               className="menu-option"
-              onClick={() => navigate("/lista-certificados")}>
+              onClick={() => navigate('/lista-certificados')}
+            >
               <IconStarRegular size={20} />
               {!collapsed && <p>Meus Certificados</p>}
             </button>
-            <button 
+            <button
               className="menu-option"
-              onClick={() => navigate("/lista-documentos")}>
+              onClick={() => navigate('/lista-documentos')}
+            >
               <IconFolderRegular size={20} />
               {!collapsed && <p>Documentos</p>}
             </button>
-            <button 
+            <button
               className="menu-option"
-              onClick={() => navigate("/suporte")}>
+              onClick={() => navigate('/suporte')}
+            >
               <IconQuestionRegular size={20} />
               {!collapsed && <p>Ajuda</p>}
             </button>
-            <button 
+            <button
               className="menu-option"
-              onClick={() => navigate("/")}>
+              onClick={() => {
+                // Limpa o localStorage e navega para login
+                localStorage.removeItem('usuario')
+                navigate('/')
+                // Força reload da página para limpar o estado
+                window.location.reload()
+              }}
+            >
               <IconLogoutRegular size={20} />
               {!collapsed && <p>Logout</p>}
             </button>
@@ -132,7 +138,7 @@ const Menu = ({ collapsed, setCollapsed }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Menu;
+export default Menu

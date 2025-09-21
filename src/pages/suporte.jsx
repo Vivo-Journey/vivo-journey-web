@@ -6,36 +6,50 @@ import {
   IconWarningRegular,
   ResponsiveLayout,
   Stack,
-  TextField,
-} from "@telefonica/mistica";
-import { useState } from "react";
-import "../assets/css/global.css";
-import "../assets/css/suporte.css";
-import Loading from "../components/loading";
-import Menu from "../components/menu";
+  TextField
+} from '@telefonica/mistica'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import '../assets/css/global.css'
+import '../assets/css/suporte.css'
+import Loading from '../components/loading'
+import Menu from '../components/menu'
 
-export default function Suporte() {
-  const [menuCollapsed, setMenuCollapsed] = useState(false);
+export default function Suporte({ usuario }) {
+  const [menuCollapsed, setMenuCollapsed] = useState(false)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    // Redireciona para login se não houver usuário
+    if (!usuario) {
+      navigate('/')
+      return
+    }
+  }, [usuario, navigate])
 
   return (
     <ResponsiveLayout fullWidth>
       <Loading />
-      <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
+      <Menu
+        collapsed={menuCollapsed}
+        setCollapsed={setMenuCollapsed}
+        usuario={usuario}
+      />
       <div
         style={{
-          marginLeft: menuCollapsed ? "72px" : "320px", // ajusta conforme o menu
-          transition: "margin-left 0.3s ease",
-          padding: "32px",
+          marginLeft: menuCollapsed ? '72px' : '320px', // ajusta conforme o menu
+          transition: 'margin-left 0.3s ease',
+          padding: '32px'
         }}
       >
         <div className="help-container">
           <IconWarningRegular color="#55038C" size={32} />
           <h1>Relatar Problema</h1>
           <Form
-            onSubmit={(formData) =>
+            onSubmit={formData =>
               alert({
-                title: "Dados do formulário",
-                message: JSON.stringify(formData, null, 2),
+                title: 'Dados do formulário',
+                message: JSON.stringify(formData, null, 2)
               })
             }
           >
@@ -57,7 +71,7 @@ export default function Suporte() {
                 />
                 <ButtonLayout
                   primaryButton={
-                    <ButtonPrimary submit style={{ borderRadius: "15px" }}>
+                    <ButtonPrimary submit style={{ borderRadius: '15px' }}>
                       Enviar
                     </ButtonPrimary>
                   }
@@ -68,5 +82,5 @@ export default function Suporte() {
         </div>
       </div>
     </ResponsiveLayout>
-  );
+  )
 }

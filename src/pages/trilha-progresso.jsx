@@ -11,58 +11,66 @@ import {
   Tag,
   Text,
   Title4,
-  Tooltip,
-} from "@telefonica/mistica";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import "../assets/css/global.css";
-import "../assets/css/trilha-progresso.css";
-import Loading from "../components/loading";
-import Menu from "../components/menu";
-import { get } from "../utils/api";
+  Tooltip
+} from '@telefonica/mistica'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import '../assets/css/global.css'
+import '../assets/css/trilha-progresso.css'
+import Loading from '../components/loading'
+import Menu from '../components/menu'
+import { get } from '../utils/api'
 
-export default function TrilhaProgresso({ idUsuario = 3 }) {
-  const location = useLocation();
-  const { idTrilha } = location.state || {};
-  const navigate = useNavigate();
+export default function TrilhaProgresso({ usuario }) {
+  const location = useLocation()
+  const { idTrilha } = location.state || {}
+  const navigate = useNavigate()
 
-  const [modulos, setModulos] = useState([]);
-  const [menuCollapsed, setMenuCollapsed] = useState(false);
+  const [modulos, setModulos] = useState([])
+  const [menuCollapsed, setMenuCollapsed] = useState(false)
 
   useEffect(() => {
-    if (!idTrilha) return;
-    get(`/vivo-journey/usuarios/${idUsuario}/trilhas/${idTrilha}/modulos`)
-      .then((data) => setModulos(Array.isArray(data) ? data : []))
-      .catch((error) => {
-        console.error("Erro ao buscar módulos:", error);
-        setModulos([]);
-      });
-  }, [idTrilha]);
+    // Redireciona para login se não houver usuário
+    if (!usuario) {
+      navigate('/')
+      return
+    }
+
+    if (!idTrilha || !usuario?.id_usuario) return
+    get(
+      `/vivo-journey/usuarios/${usuario.id_usuario}/trilhas/${idTrilha}/modulos`
+    )
+      .then(data => setModulos(Array.isArray(data) ? data : []))
+      .catch(error => {
+        console.error('Erro ao buscar módulos:', error)
+        setModulos([])
+      })
+  }, [idTrilha, usuario, navigate])
 
   // Determina o índice atual para o Stepper
   const currentIndex = (() => {
     const indexEmAndamento = modulos?.findIndex(
-      (m) => m.status.toLowerCase() === "em andamento"
-    );
-    if (indexEmAndamento !== -1) return indexEmAndamento;
+      m => m.status.toLowerCase() === 'em andamento'
+    )
+    if (indexEmAndamento !== -1) return indexEmAndamento
 
     const indexPendente = modulos.findIndex(
-      (m) => m.status.toLowerCase() === "pendente"
-    );
-    if (indexPendente !== -1) return indexPendente;
+      m => m.status.toLowerCase() === 'pendente'
+    )
+    if (indexPendente !== -1) return indexPendente
 
-    return modulos.length > 0 ? modulos.length - 1 : 0;
-  })();
+    return modulos.length > 0 ? modulos.length - 1 : 0
+  })()
 
   // Módulo atual para o banner
   const moduloAtual = (() => {
     const emAndamento = modulos.find(
-      (m) => m.status.toLowerCase() === "em andamento"
-    );
+      m => m.status.toLowerCase() === 'em andamento'
+    )
     return (
       emAndamento || (modulos.length > 0 ? modulos[modulos.length - 1] : null)
-    );
-  })();
+    )
+  })()
 
   // Steps para o Stepper
   const steps = modulos.map((modulo, index) => (
@@ -72,7 +80,7 @@ export default function TrilhaProgresso({ idUsuario = 3 }) {
       target={
         <Text
           style={{
-            fontWeight: modulo.status === "Concluído" ? "bold" : "normal",
+            fontWeight: modulo.status === 'Concluído' ? 'bold' : 'normal'
           }}
         >
           {`Módulo ${index + 1}`}
@@ -82,23 +90,23 @@ export default function TrilhaProgresso({ idUsuario = 3 }) {
         <>
           <Inline space={8} alignItems="center">
             <IconWinnerRegular
-              color={modulo.status === "Concluído" ? "#55038C" : "#B292C8"}
+              color={modulo.status === 'Concluído' ? '#55038C' : '#B292C8'}
             />
             <Text>{modulo.descricao}</Text>
           </Inline>
 
           <div
             style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: "8px",
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginTop: '8px'
             }}
           >
             <ButtonLink
               small
               onPress={() =>
-                navigate("/conteudo-trilhas", {
-                  state: { idModulo: modulo.id_modulo, idTrilha: idTrilha },
+                navigate('/conteudo-trilhas', {
+                  state: { idModulo: modulo.id_modulo, idTrilha: idTrilha }
                 })
               }
             >
@@ -108,26 +116,30 @@ export default function TrilhaProgresso({ idUsuario = 3 }) {
         </>
       }
     />
-  ));
+  ))
 
   return (
     <div>
       <Loading />
-      <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
+      <Menu
+        collapsed={menuCollapsed}
+        setCollapsed={setMenuCollapsed}
+        usuario={usuario}
+      />
       <div
         style={{
-          marginLeft: menuCollapsed ? "72px" : "320px",
-          transition: "margin-left 0.3s ease",
-          padding: "32px",
+          marginLeft: menuCollapsed ? '72px' : '320px',
+          transition: 'margin-left 0.3s ease',
+          padding: '32px'
         }}
       >
         {modulos.length > 0 ? (
           <Stack space={64}>
             <NavigationBreadcrumbs
               breadcrumbs={[
-                { title: "Dashboard", url: "/dashboard" },
-                { title: "Minhas Trilhas", url: "/lista-trilhas" },
-                { title: "Progresso da Trilha", url: "/trilha-progresso" },
+                { title: 'Dashboard', url: '/dashboard' },
+                { title: 'Minhas Trilhas', url: '/lista-trilhas' },
+                { title: 'Progresso da Trilha', url: '/trilha-progresso' }
               ]}
             />
             <Title4>Progresso da Trilha</Title4>
@@ -147,17 +159,17 @@ export default function TrilhaProgresso({ idUsuario = 3 }) {
                   title={moduloAtual.titulo}
                   description={moduloAtual.descricao}
                   imageSrc={
-                    moduloAtual.img_capa || "https://picsum.photos/1200/1200"
+                    moduloAtual.img_capa || 'https://picsum.photos/1200/1200'
                   }
                   buttonPrimary={
                     <ButtonPrimary
                       small
                       onPress={() =>
-                        navigate("/conteudo-trilhas", {
+                        navigate('/conteudo-trilhas', {
                           state: {
                             idModulo: moduloAtual.id_modulo,
-                            idTrilha: idTrilha,
-                          },
+                            idTrilha: idTrilha
+                          }
                         })
                       }
                     >
@@ -181,7 +193,7 @@ export default function TrilhaProgresso({ idUsuario = 3 }) {
             title="Sem Módulos"
             description="Esta trilha ainda não possuí módulos."
             button={
-              <ButtonPrimary onPress={() => navigate("/lista-trilhas")}>
+              <ButtonPrimary onPress={() => navigate('/lista-trilhas')}>
                 Voltar a Lista
               </ButtonPrimary>
             }
@@ -189,5 +201,5 @@ export default function TrilhaProgresso({ idUsuario = 3 }) {
         )}
       </div>
     </div>
-  );
+  )
 }
