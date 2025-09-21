@@ -122,10 +122,12 @@ const Menu = ({ collapsed, setCollapsed }) => {
               <IconQuestionRegular size={20} />
               {!collapsed && <p>Ajuda</p>}
             </button>
-            <div className="menu-option">
+            <button 
+              className="menu-option"
+              onClick={() => navigate("/")}>
               <IconLogoutRegular size={20} />
               {!collapsed && <p>Logout</p>}
-            </div>
+            </button>
           </div>
         </div>
       </div>

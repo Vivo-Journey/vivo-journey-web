@@ -11,15 +11,18 @@ import "../assets/css/global.css";
 import imgFundo from "../assets/img/img-fundo-tela.svg";
 import { get } from "../utils/api";
 import Menu from "../components/menu";
+import Loading from "../components/loading";
 
-export default function Dashboard() {
+const Dashboard = ({ idUsuario = 3 }) => {
   const [user, setUser] = useState(null);
   const [trilhas, setTrilhas] = useState([]);
   const [menuCollapsed, setMenuCollapsed] = useState(false);
 
   useEffect(() => {
-    get("/vivo-journey/usuarios/3").then((data) => setUser(data));
-    get("/vivo-journey/usuarios/3/trilhas").then((data) => setTrilhas(data));
+    get(`/vivo-journey/usuarios/${idUsuario}`).then((data) => setUser(data));
+    get(`/vivo-journey/usuarios/${idUsuario}/trilhas`).then((data) =>
+      setTrilhas(data)
+    );
   }, []);
 
   const buddy = user?.buddy;
@@ -27,6 +30,7 @@ export default function Dashboard() {
 
   return (
     <ResponsiveLayout backgroundColor={"#F0EDFF"} fullWidth>
+      <Loading />
       <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
       <div
         style={{
@@ -107,4 +111,6 @@ export default function Dashboard() {
       </div>
     </ResponsiveLayout>
   );
-}
+};
+
+export default Dashboard;

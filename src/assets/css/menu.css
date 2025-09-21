@@ -123,3 +123,8 @@
   font-size: 12px;
   margin-top: 2px
 }
+
+.menu-trilhas-container span[data-component-name="Tag"] > span {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

@@ -1,5 +1,4 @@
 import {
-  Box,
   ButtonPrimary,
   ButtonSecondary,
   NavigationBreadcrumbs,
@@ -10,13 +9,14 @@ import {
   Title4
 } from "@telefonica/mistica";
 import { useEffect, useState } from "react";
-import '../assets/css/dashboard.css';
-import '../assets/css/global.css';
+import { useNavigate } from "react-router-dom";
+import "../assets/css/dashboard.css";
+import "../assets/css/global.css";
+import Loading from "../components/loading";
 import Menu from "../components/menu";
 import { get } from "../utils/api";
-import { useNavigate } from "react-router-dom";
 
-const ListaCertificados = () => {
+const ListaCertificados = ({ idUsuario = 3 }) => {
   const [certificados, setCertificados] = useState([]);
   const [certificadosFiltrados, setCertificadosFiltrados] = useState([]);
   const [filtroNomeTrilha, setFiltroNomeTrilha] = useState("");
@@ -24,7 +24,7 @@ const ListaCertificados = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    get("/vivo-journey/usuarios/3/certificados").then((data) => {
+    get(`/vivo-journey/usuarios/${idUsuario}/certificados`).then((data) => {
       setCertificados(data);
       setCertificadosFiltrados(data);
     });
@@ -33,7 +33,7 @@ const ListaCertificados = () => {
   const buscarCertificadosPorFiltro = () => {
     const filtradas = certificados?.filter((certif) => {
       if (!filtroNomeTrilha) return true;
-      const regex = new RegExp(filtroNomeTrilha, 'i');
+      const regex = new RegExp(filtroNomeTrilha, "i");
       return regex.test(certif?.trilha?.nome);
     });
     setCertificadosFiltrados(filtradas);
@@ -41,6 +41,7 @@ const ListaCertificados = () => {
 
   return (
     <ResponsiveLayout fullWidth>
+      <Loading />
       <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
       <div
         style={{
@@ -53,7 +54,7 @@ const ListaCertificados = () => {
           <NavigationBreadcrumbs
             breadcrumbs={[
               { title: "Dashboard", url: "/dashboard" },
-              { title: "Certificados", url: "/lista-certificados" }
+              { title: "Certificados", url: "/lista-certificados" },
             ]}
           />
           <Title4>Seus Certificados</Title4>
@@ -67,12 +68,19 @@ const ListaCertificados = () => {
                 fullWidth
               />
             </div>
-            <ButtonPrimary onPress={buscarCertificadosPorFiltro}>Buscar</ButtonPrimary>
+            <ButtonPrimary onPress={buscarCertificadosPorFiltro}>
+              Buscar
+            </ButtonPrimary>
           </div>
 
           <Table
             boxed
-            heading={["Id Certificado", "Nome da Trilha", "Data Fim Trilha", ""]}
+            heading={[
+              "Id Certificado",
+              "Nome da Trilha",
+              "Data Fim Trilha",
+              "",
+            ]}
             content={certificadosFiltrados?.map((certif) => ({
               cells: [
                 certif?.id_certificado,
@@ -85,7 +93,11 @@ const ListaCertificados = () => {
                     color: "var(--cor-rosa-chiclete)",
                   }}
                   small
-                  onPress={() => Promise.resolve().then(() => window.open(certif.url_pdf, "_blank"))}
+                  onPress={() =>
+                    Promise.resolve().then(() =>
+                      window.open(certif.url_pdf, "_blank")
+                    )
+                  }
                 >
                   Visualizar Certificado
                 </ButtonSecondary>,

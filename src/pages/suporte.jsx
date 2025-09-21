@@ -12,12 +12,14 @@ import { useState } from "react";
 import Menu from "../components/menu";
 import '../assets/css/global.css';
 import '../assets/css/suporte.css';
+import Loading from "../components/loading";
 
 export default function Suporte() {
   const [menuCollapsed, setMenuCollapsed] = useState(false);
 
   return (
     <ResponsiveLayout fullWidth>
+      <Loading />
       <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
       <div
         style={{

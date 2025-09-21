@@ -1,5 +1,4 @@
 import {
-  Box,
   ButtonPrimary,
   ButtonSecondary,
   Inline,
@@ -14,12 +13,13 @@ import {
 } from "@telefonica/mistica";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../assets/css/dashboard.css';
-import '../assets/css/global.css';
+import "../assets/css/dashboard.css";
+import "../assets/css/global.css";
+import Loading from "../components/loading";
 import Menu from "../components/menu";
 import { get } from "../utils/api";
 
-const ListaTrilha = () => {
+const ListaTrilha = ({ idUsuario = 3 }) => {
   const [trilhas, setTrilhas] = useState([]);
   const [trilhasFiltradas, setTrilhasFiltradas] = useState([]);
   const [filtroNomeTrilha, setFiltroNomeTrilha] = useState("");
@@ -27,7 +27,7 @@ const ListaTrilha = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    get("/vivo-journey/usuarios/3/trilhas").then((data) => {
+    get(`/vivo-journey/usuarios/${idUsuario}/trilhas`).then((data) => {
       setTrilhas(data);
       setTrilhasFiltradas(data);
     });
@@ -36,7 +36,7 @@ const ListaTrilha = () => {
   const buscarTrilhaPorFiltro = () => {
     const filtradas = trilhas?.filter((trilha) => {
       if (!filtroNomeTrilha) return true;
-      const regex = new RegExp(filtroNomeTrilha, 'i');
+      const regex = new RegExp(filtroNomeTrilha, "i");
       return regex.test(trilha?.nome);
     });
     setTrilhasFiltradas(filtradas);
@@ -45,12 +45,13 @@ const ListaTrilha = () => {
   const formatarPercentual = (p) => {
     const texto = `${p}%`;
     if (p === 100) return texto;
-    if (p >= 10) return ' ' + texto;
-    return '  ' + texto;
+    if (p >= 10) return " " + texto;
+    return "  " + texto;
   };
 
   return (
     <ResponsiveLayout fullWidth>
+      <Loading />
       <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
       <div
         style={{
@@ -63,7 +64,7 @@ const ListaTrilha = () => {
           <NavigationBreadcrumbs
             breadcrumbs={[
               { title: "Dashboard", url: "/dashboard" },
-              { title: "Minhas Trilhas", url: "/lista-trilhas" }
+              { title: "Minhas Trilhas", url: "/lista-trilhas" },
             ]}
           />
           <Title4>Suas Trilhas</Title4>
@@ -77,12 +78,21 @@ const ListaTrilha = () => {
                 fullWidth
               />
             </div>
-            <ButtonPrimary onPress={buscarTrilhaPorFiltro}>Buscar</ButtonPrimary>
+            <ButtonPrimary onPress={buscarTrilhaPorFiltro}>
+              Buscar
+            </ButtonPrimary>
           </div>
 
           <Table
             boxed
-            heading={["Id Trilha", "Nome", "Data Início", "Data Prev. Fim", "Progresso", ""]}
+            heading={[
+              "Id Trilha",
+              "Nome",
+              "Data Início",
+              "Data Prev. Fim",
+              "Progresso",
+              "",
+            ]}
             content={trilhasFiltradas?.map((trilha) => ({
               cells: [
                 trilha?.id_trilha,
@@ -94,9 +104,15 @@ const ListaTrilha = () => {
                     colors={["var(--cor-rosa-chiclete)", "#B292C8"]}
                     type="linear"
                     width={190}
-                    values={[trilha?.percentual_progresso, 100 - trilha?.percentual_progresso, 0]}
+                    values={[
+                      trilha?.percentual_progresso,
+                      100 - trilha?.percentual_progresso,
+                      0,
+                    ]}
                   />
-                  <Text>{formatarPercentual(trilha?.percentual_progresso)}</Text>
+                  <Text>
+                    {formatarPercentual(trilha?.percentual_progresso)}
+                  </Text>
                 </Inline>,
                 <ButtonSecondary
                   style={{
@@ -105,7 +121,11 @@ const ListaTrilha = () => {
                     color: "var(--cor-rosa-chiclete)",
                   }}
                   small
-                  onPress={() => navigate("/trilha-progresso", { state: { idTrilha: trilha?.id_trilha } })}
+                  onPress={() =>
+                    navigate("/trilha-progresso", {
+                      state: { idTrilha: trilha?.id_trilha },
+                    })
+                  }
                 >
                   Acessar
                 </ButtonSecondary>,
