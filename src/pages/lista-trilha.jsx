@@ -9,7 +9,7 @@ import {
   Stack,
   Table,
   Text,
-  Title4
+  Title4,
 } from "@telefonica/mistica";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

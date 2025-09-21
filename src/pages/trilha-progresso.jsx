@@ -59,7 +59,9 @@ export default function TrilhaProgresso({ idUsuario = 3 }) {
     const emAndamento = modulos.find(
       (m) => m.status.toLowerCase() === "em andamento"
     );
-    return emAndamento || (modulos.length > 0 ? modulos[modulos.length - 1] : null);
+    return (
+      emAndamento || (modulos.length > 0 ? modulos[modulos.length - 1] : null)
+    );
   })();
 
   // Steps para o Stepper
@@ -144,13 +146,18 @@ export default function TrilhaProgresso({ idUsuario = 3 }) {
                   }
                   title={moduloAtual.titulo}
                   description={moduloAtual.descricao}
-                  imageSrc={moduloAtual.img_capa || "https://picsum.photos/1200/1200"}
+                  imageSrc={
+                    moduloAtual.img_capa || "https://picsum.photos/1200/1200"
+                  }
                   buttonPrimary={
                     <ButtonPrimary
                       small
                       onPress={() =>
                         navigate("/conteudo-trilhas", {
-                          state: { idModulo: moduloAtual.id_modulo, idTrilha: idTrilha },
+                          state: {
+                            idModulo: moduloAtual.id_modulo,
+                            idTrilha: idTrilha,
+                          },
                         })
                       }
                     >
@@ -163,7 +170,9 @@ export default function TrilhaProgresso({ idUsuario = 3 }) {
 
             {/* Stepper */}
             <div className="trilha-steps">
-              {modulos.length > 0 && <Stepper currentIndex={currentIndex} steps={steps} />}
+              {modulos.length > 0 && (
+                <Stepper currentIndex={currentIndex} steps={steps} />
+              )}
             </div>
           </Stack>
         ) : (

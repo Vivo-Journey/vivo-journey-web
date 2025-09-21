@@ -6,7 +6,7 @@ import {
   SearchField,
   Stack,
   Table,
-  Title4
+  Title4,
 } from "@telefonica/mistica";
 import { useEffect, useState } from "react";
 import "../assets/css/dashboard.css";

@@ -3,16 +3,16 @@ import {
   ButtonLayout,
   ButtonPrimary,
   Form,
+  IconWarningRegular,
+  ResponsiveLayout,
   Stack,
   TextField,
-  IconWarningRegular,
-  ResponsiveLayout
 } from "@telefonica/mistica";
 import { useState } from "react";
-import Menu from "../components/menu";
-import '../assets/css/global.css';
-import '../assets/css/suporte.css';
+import "../assets/css/global.css";
+import "../assets/css/suporte.css";
 import Loading from "../components/loading";
+import Menu from "../components/menu";
 
 export default function Suporte() {
   const [menuCollapsed, setMenuCollapsed] = useState(false);
@@ -57,7 +57,7 @@ export default function Suporte() {
                 />
                 <ButtonLayout
                   primaryButton={
-                    <ButtonPrimary submit style={{ borderRadius: '15px' }}>
+                    <ButtonPrimary submit style={{ borderRadius: "15px" }}>
                       Enviar
                     </ButtonPrimary>
                   }

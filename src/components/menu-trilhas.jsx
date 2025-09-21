@@ -10,7 +10,6 @@ import {
   Tag,
   Text,
   Title2,
-  Title3,
 } from "@telefonica/mistica";
 import { useState } from "react";
 import "../assets/css/menu.css";
@@ -93,7 +92,7 @@ const MenuTrilhas = ({ conteudos = [], selectedConteudoId, onSelect }) => {
                     transition: "background-color 0.2s",
                   }}
                 >
-                  <Text size={12} weight={isSelected ? "bold" : "regular"} >
+                  <Text size={12} weight={isSelected ? "bold" : "regular"}>
                     {c.descricao}
                   </Text>
                 </div>
