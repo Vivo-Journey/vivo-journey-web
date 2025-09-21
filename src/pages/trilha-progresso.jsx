@@ -21,7 +21,7 @@ import Loading from '../components/loading'
 import Menu from '../components/menu'
 import { get } from '../utils/api'
 
-export default function TrilhaProgresso({ usuario }) {
+export default function TrilhaProgresso({ usuario, onLogout }) {
   const location = useLocation()
   const { idTrilha } = location.state || {}
   const navigate = useNavigate()
@@ -30,12 +30,6 @@ export default function TrilhaProgresso({ usuario }) {
   const [menuCollapsed, setMenuCollapsed] = useState(false)
 
   useEffect(() => {
-    // Redireciona para login se não houver usuário
-    if (!usuario) {
-      navigate('/')
-      return
-    }
-
     if (!idTrilha || !usuario?.id_usuario) return
     get(
       `/vivo-journey/usuarios/${usuario.id_usuario}/trilhas/${idTrilha}/modulos`
@@ -45,7 +39,7 @@ export default function TrilhaProgresso({ usuario }) {
         console.error('Erro ao buscar módulos:', error)
         setModulos([])
       })
-  }, [idTrilha, usuario, navigate])
+  }, [idTrilha, usuario])
 
   // Determina o índice atual para o Stepper
   const currentIndex = (() => {
@@ -125,6 +119,7 @@ export default function TrilhaProgresso({ usuario }) {
         collapsed={menuCollapsed}
         setCollapsed={setMenuCollapsed}
         usuario={usuario}
+        onLogout={onLogout}
       />
       <div
         style={{

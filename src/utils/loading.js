@@ -8,7 +8,8 @@ export const setLoading = (value) => {
 
 export const subscribeLoading = (fn) => {
   listeners.push(fn);
-  // retorna função para remover listener
+  fn(isLoading); // notifica o estado inicial logo que o componente se inscreve
+
   return () => {
     listeners = listeners.filter((l) => l !== fn);
   };

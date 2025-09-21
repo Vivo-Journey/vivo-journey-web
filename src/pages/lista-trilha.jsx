@@ -19,27 +19,21 @@ import Loading from '../components/loading'
 import Menu from '../components/menu'
 import { get } from '../utils/api'
 
-const ListaTrilha = ({ usuario }) => {
+const ListaTrilha = ({ usuario, onLogout }) => {
   const [trilhas, setTrilhas] = useState([])
   const [trilhasFiltradas, setTrilhasFiltradas] = useState([])
   const [filtroNomeTrilha, setFiltroNomeTrilha] = useState('')
   const [menuCollapsed, setMenuCollapsed] = useState(false)
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Redireciona para login se não houver usuário
-    if (!usuario) {
-      navigate('/')
-      return
-    }
-
     if (usuario?.id_usuario) {
       get(`/vivo-journey/usuarios/${usuario.id_usuario}/trilhas`).then(data => {
         setTrilhas(data)
         setTrilhasFiltradas(data)
       })
     }
-  }, [usuario, navigate])
+  }, [usuario])
 
   const buscarTrilhaPorFiltro = () => {
     const filtradas = trilhas?.filter(trilha => {
@@ -64,6 +58,7 @@ const ListaTrilha = ({ usuario }) => {
         collapsed={menuCollapsed}
         setCollapsed={setMenuCollapsed}
         usuario={usuario}
+        onLogout={onLogout}
       />
       <div
         style={{

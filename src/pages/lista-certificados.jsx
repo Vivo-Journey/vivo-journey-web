@@ -16,7 +16,7 @@ import Menu from '../components/menu'
 import { get } from '../utils/api'
 import { useNavigate } from 'react-router-dom'
 
-const ListaCertificados = ({ usuario }) => {
+const ListaCertificados = ({ usuario, onLogout }) => {
   const [certificados, setCertificados] = useState([])
   const [certificadosFiltrados, setCertificadosFiltrados] = useState([])
   const [filtroNomeTrilha, setFiltroNomeTrilha] = useState('')
@@ -24,12 +24,6 @@ const ListaCertificados = ({ usuario }) => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // Redireciona para login se não houver usuário
-    if (!usuario) {
-      navigate('/')
-      return
-    }
-
     if (usuario?.id_usuario) {
       get(`/vivo-journey/usuarios/${usuario.id_usuario}/certificados`).then(
         data => {
@@ -56,6 +50,7 @@ const ListaCertificados = ({ usuario }) => {
         collapsed={menuCollapsed}
         setCollapsed={setMenuCollapsed}
         usuario={usuario}
+        onLogout={onLogout}
       />
       <div
         style={{

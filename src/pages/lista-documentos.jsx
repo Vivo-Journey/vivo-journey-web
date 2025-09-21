@@ -6,48 +6,41 @@ import {
   SearchField,
   Stack,
   Table,
-  Title4
-} from '@telefonica/mistica'
-import { useEffect, useState } from 'react'
-import '../assets/css/dashboard.css'
-import '../assets/css/global.css'
-import Loading from '../components/loading'
-import Menu from '../components/menu'
-import { get } from '../utils/api'
-import { useNavigate } from 'react-router-dom'
+  Title4,
+} from "@telefonica/mistica";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../assets/css/dashboard.css";
+import "../assets/css/global.css";
+import Loading from "../components/loading";
+import Menu from "../components/menu";
+import { get } from "../utils/api";
 
-const ListaDocumentos = ({ usuario }) => {
-  const [documentos, setDocumentos] = useState([])
-  const [documentosFiltrados, setDocumentosFiltrados] = useState([])
-  const [filtroTituloDocumento, setFiltroTituloDocumento] = useState('')
-  const [menuCollapsed, setMenuCollapsed] = useState(false)
-  const navigate = useNavigate()
+const ListaDocumentos = ({ usuario, onLogout }) => {
+  const [documentos, setDocumentos] = useState([]);
+  const [documentosFiltrados, setDocumentosFiltrados] = useState([]);
+  const [filtroTituloDocumento, setFiltroTituloDocumento] = useState("");
+  const [menuCollapsed, setMenuCollapsed] = useState(false);
 
   useEffect(() => {
-    // Redireciona para login se não houver usuário
-    if (!usuario) {
-      navigate('/')
-      return
-    }
-
     if (usuario?.id_usuario) {
       get(`/vivo-journey/usuarios/${usuario.id_usuario}/documentos`).then(
-        data => {
-          setDocumentos(data)
-          setDocumentosFiltrados(data)
+        (data) => {
+          setDocumentos(data);
+          setDocumentosFiltrados(data);
         }
-      )
+      );
     }
-  }, [usuario, navigate])
+  }, [usuario]);
 
   const buscarDocumentosPorFiltro = () => {
-    const filtradas = documentos?.filter(doc => {
-      if (!filtroTituloDocumento) return true
-      const regex = new RegExp(filtroTituloDocumento, 'i')
-      return regex.test(doc?.titulo)
-    })
-    setDocumentosFiltrados(filtradas)
-  }
+    const filtradas = documentos?.filter((doc) => {
+      if (!filtroTituloDocumento) return true;
+      const regex = new RegExp(filtroTituloDocumento, "i");
+      return regex.test(doc?.titulo);
+    });
+    setDocumentosFiltrados(filtradas);
+  };
 
   return (
     <ResponsiveLayout fullWidth>
@@ -56,29 +49,30 @@ const ListaDocumentos = ({ usuario }) => {
         collapsed={menuCollapsed}
         setCollapsed={setMenuCollapsed}
         usuario={usuario}
+        onLogout={onLogout}
       />
       <div
         style={{
-          marginLeft: menuCollapsed ? '72px' : '320px', // ajusta conforme o menu
-          transition: 'margin-left 0.3s ease',
-          padding: '32px'
+          marginLeft: menuCollapsed ? "72px" : "320px", // ajusta conforme o menu
+          transition: "margin-left 0.3s ease",
+          padding: "32px",
         }}
       >
         <Stack space={32}>
           <NavigationBreadcrumbs
             breadcrumbs={[
-              { title: 'Dashboard', url: '/dashboard' },
-              { title: 'Documentos', url: '/lista-documentos' }
+              { title: "Dashboard", url: "/dashboard" },
+              { title: "Documentos", url: "/lista-documentos" },
             ]}
           />
           <Title4>Documentos Úteis</Title4>
 
-          <div style={{ display: 'flex', gap: '12px', marginBottom: '32px' }}>
+          <div style={{ display: "flex", gap: "12px", marginBottom: "32px" }}>
             <div style={{ flex: 1 }}>
               <SearchField
                 name="titulo"
                 label="Consulte o Título do Documento"
-                onChangeValue={titulo => setFiltroTituloDocumento(titulo)}
+                onChangeValue={(titulo) => setFiltroTituloDocumento(titulo)}
                 fullWidth
               />
             </div>
@@ -89,35 +83,35 @@ const ListaDocumentos = ({ usuario }) => {
 
           <Table
             boxed
-            heading={['Id Doc.', 'Título', 'Descrição', '']}
-            content={documentosFiltrados?.map(doc => ({
+            heading={["Id Doc.", "Título", "Descrição", ""]}
+            content={documentosFiltrados?.map((doc) => ({
               cells: [
                 doc?.id_documento,
                 doc?.titulo,
                 doc?.descricao,
                 <ButtonSecondary
                   style={{
-                    backgroundColor: '#FDE6F9',
-                    borderColor: 'var(--cor-rosa-chiclete)',
-                    color: 'var(--cor-rosa-chiclete)'
+                    backgroundColor: "#FDE6F9",
+                    borderColor: "var(--cor-rosa-chiclete)",
+                    color: "var(--cor-rosa-chiclete)",
                   }}
                   small
                   onPress={() =>
                     Promise.resolve().then(() =>
-                      window.open(doc.url_documento, '_blank')
+                      window.open(doc.url_documento, "_blank")
                     )
                   }
                 >
                   Visualizar Documento
-                </ButtonSecondary>
+                </ButtonSecondary>,
               ],
-              actions: []
+              actions: [],
             }))}
           />
         </Stack>
       </div>
     </ResponsiveLayout>
-  )
-}
+  );
+};
 
-export default ListaDocumentos
+export default ListaDocumentos;
