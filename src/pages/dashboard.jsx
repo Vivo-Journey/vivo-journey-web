@@ -18,13 +18,11 @@ const Dashboard = ({ usuario }) => {
       navigate('/')
       return
     }
-    console.log('usuario', usuario)
 
     if (usuario?.id_usuario) {
       get(`/vivo-journey/usuarios/${usuario.id_usuario}/trilhas`).then(data =>
         setTrilhas(data)
       )
-      console.log('trilhas', trilhas)
     }
   }, [usuario, navigate])
 

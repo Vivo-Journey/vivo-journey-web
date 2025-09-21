@@ -40,10 +40,8 @@ export default function Login({ setUsuario }) {
       })
       setUsuario(usuarioData)
 
-      // Navega para o dashboard
       navigate('/dashboard')
     } catch (error) {
-      // Extrai a mensagem de erro da API se disponível
       const errorMessage = error.message.includes('Email ou senha inválidos')
         ? 'Email ou senha inválidos. Tente novamente.'
         : 'Erro ao fazer login. Tente novamente.'

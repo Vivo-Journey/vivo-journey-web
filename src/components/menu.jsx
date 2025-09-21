@@ -124,10 +124,8 @@ const Menu = ({ collapsed, setCollapsed, usuario }) => {
             <button
               className="menu-option"
               onClick={() => {
-                // Limpa o localStorage e navega para login
                 localStorage.removeItem('usuario')
                 navigate('/')
-                // Força reload da página para limpar o estado
                 window.location.reload()
               }}
             >
