@@ -14,10 +14,10 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../assets/css/conteudo-trilha.css";
 import "../assets/css/global.css";
+import Loading from "../components/loading";
 import Menu from "../components/menu";
 import MenuTrilhas from "../components/menu-trilhas";
 import { get } from "../utils/api";
-import Loading from "../components/loading";
 
 export default function ConteudoTrilha({ usuarioId = 3 }) {
   const [menuCollapsed, setMenuCollapsed] = useState(false);
@@ -28,7 +28,7 @@ export default function ConteudoTrilha({ usuarioId = 3 }) {
   const location = useLocation();
   const { idModulo, idTrilha } = location.state || {};
 
-  console.log(idModulo, idTrilha)
+  console.log(idModulo, idTrilha);
 
   // Buscar conteúdos do módulo
   useEffect(() => {

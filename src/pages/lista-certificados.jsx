@@ -6,10 +6,9 @@ import {
   SearchField,
   Stack,
   Table,
-  Title4
+  Title4,
 } from "@telefonica/mistica";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../assets/css/dashboard.css";
 import "../assets/css/global.css";
 import Loading from "../components/loading";
@@ -21,7 +20,6 @@ const ListaCertificados = ({ idUsuario = 3 }) => {
   const [certificadosFiltrados, setCertificadosFiltrados] = useState([]);
   const [filtroNomeTrilha, setFiltroNomeTrilha] = useState("");
   const [menuCollapsed, setMenuCollapsed] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     get(`/vivo-journey/usuarios/${idUsuario}/certificados`).then((data) => {

@@ -8,13 +8,13 @@ import {
   ResponsiveLayout,
   Stack,
   Text,
-  TextField
+  TextField,
 } from "@telefonica/mistica";
 import { useState } from "react";
-import Menu from "../components/menu";
-import '../assets/css/global.css';
-import '../assets/css/feedback.css';
+import "../assets/css/feedback.css";
+import "../assets/css/global.css";
 import Loading from "../components/loading";
+import Menu from "../components/menu";
 
 export default function Feedback() {
   const [menuCollapsed, setMenuCollapsed] = useState(false);
@@ -34,13 +34,27 @@ export default function Feedback() {
           <div className="feedback-conteudo">
             <div>
               <h1>Feedback</h1>
-              <h2>Conte-nos o que você achou: seu feedback é muito importante para nós!</h2>
+              <h2>
+                Conte-nos o que você achou: seu feedback é muito importante para
+                nós!
+              </h2>
             </div>
 
-            {["Relevância do Conteúdo", "Organização da Plataforma", "Eficácia do Aprendizado", "Suporte e Ajuda"].map((item, index) => (
+            {[
+              "Relevância do Conteúdo",
+              "Organização da Plataforma",
+              "Eficácia do Aprendizado",
+              "Suporte e Ajuda",
+            ].map((item, index) => (
               <div className="item-avaliado" key={index}>
                 <Text color="#660099">{item}</Text>
-                <div style={{ backgroundColor: '#f0f0f0', padding: '1%', borderRadius: '20px' }}>
+                <div
+                  style={{
+                    backgroundColor: "#f0f0f0",
+                    padding: "1%",
+                    borderRadius: "20px",
+                  }}
+                >
                   <Rating
                     aria-label="quantitative rating"
                     type="quantitative"
@@ -50,7 +64,7 @@ export default function Feedback() {
                     icon={{
                       ActiveIcon: IconStarFilled,
                       InactiveIcon: IconStarRegular,
-                      color: "#F266A7"
+                      color: "#F266A7",
                     }}
                   />
                 </div>
@@ -66,7 +80,11 @@ export default function Feedback() {
                   inputProps={{ maxLength: 500 }}
                 />
                 <ButtonLayout
-                  primaryButton={<ButtonPrimary submit style={{ borderRadius: '15px' }}>Enviar</ButtonPrimary>}
+                  primaryButton={
+                    <ButtonPrimary submit style={{ borderRadius: "15px" }}>
+                      Enviar
+                    </ButtonPrimary>
+                  }
                 />
               </Stack>
             </Box>

@@ -4,13 +4,10 @@ import App from "./App.jsx";
 
 import "@telefonica/mistica/css/mistica.css";
 
-import {
-  ThemeContextProvider,
-  getVivoSkin,
-} from "@telefonica/mistica";
+import { ThemeContextProvider, getVivoSkin } from "@telefonica/mistica";
 
 const misticaTheme = {
-  colorScheme: 'light',
+  colorScheme: "light",
   skin: getVivoSkin(),
   i18n: { locale: "pt-BR", phoneNumberFormattingRegionCode: "BR" },
 };

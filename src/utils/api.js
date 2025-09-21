@@ -1,4 +1,4 @@
-import { apiUrl, DELETE, PATCH, POST, PUT } from "../config/api";
+import { apiUrl, DELETE, GET, PATCH, POST, PUT } from "../config/api";
 import { setLoading } from "./loading";
 
 const buildRequestOptions = (method, data) => ({
@@ -14,8 +14,8 @@ const handleFetch = (endpoint, method, data) => {
     .finally(() => setLoading(false)); // desliga loading
 };
 
-export const get = (endpoint) => handleFetch(endpoint, "GET", null);
-export const post = (endpoint, data) => handleFetch(endpoint, "POST", data);
-export const put = (endpoint, data) => handleFetch(endpoint, "PUT", data);
-export const del = (endpoint) => handleFetch(endpoint, "DELETE", null);
-export const patch = (endpoint, data) => handleFetch(endpoint, "PATCH", data);
+export const get = (endpoint) => handleFetch(endpoint, GET, null);
+export const post = (endpoint, data) => handleFetch(endpoint, POST, data);
+export const put = (endpoint, data) => handleFetch(endpoint, PUT, data);
+export const del = (endpoint) => handleFetch(endpoint, DELETE, null);
+export const patch = (endpoint, data) => handleFetch(endpoint, PATCH, data);
