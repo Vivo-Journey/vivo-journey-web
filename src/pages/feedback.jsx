@@ -16,13 +16,18 @@ import "../assets/css/global.css";
 import Loading from "../components/loading";
 import Menu from "../components/menu";
 
-export default function Feedback() {
+const Feedback = ({ usuario, onLogout }) => {
   const [menuCollapsed, setMenuCollapsed] = useState(false);
 
   return (
     <ResponsiveLayout fullWidth>
       <Loading />
-      <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
+      <Menu
+        collapsed={menuCollapsed}
+        setCollapsed={setMenuCollapsed}
+        usuario={usuario}
+        onLogout={onLogout}
+      />
       <div
         style={{
           marginLeft: menuCollapsed ? "72px" : "320px", // ajusta conforme o menu
@@ -93,4 +98,6 @@ export default function Feedback() {
       </div>
     </ResponsiveLayout>
   );
-}
+};
+
+export default Feedback;

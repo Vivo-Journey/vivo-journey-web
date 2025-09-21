@@ -7,12 +7,30 @@ export default function Loading() {
 
   useEffect(() => {
     const unsubscribe = subscribeLoading(setLoading);
-    return unsubscribe;
+    return unsubscribe; // limpa listener ao desmontar
   }, []);
 
   if (!loading) return null;
 
   return (
-    <LoadingScreen title="Carregando" description="Aguarde enquanto os dados carregam..." />
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 9999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgba(255, 255, 255, 0.8)",
+      }}
+    >
+      <LoadingScreen
+        title="Carregando"
+        description="Aguarde enquanto os dados carregam..."
+      />
+    </div>
   );
 }
