@@ -9,72 +9,79 @@ import {
   Stack,
   Table,
   Text,
-  Title4,
-} from "@telefonica/mistica";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../assets/css/dashboard.css";
-import "../assets/css/global.css";
-import Loading from "../components/loading";
-import Menu from "../components/menu";
-import { get } from "../utils/api";
+  Title4
+} from '@telefonica/mistica'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import '../assets/css/dashboard.css'
+import '../assets/css/global.css'
+import Loading from '../components/loading'
+import Menu from '../components/menu'
+import { get } from '../utils/api'
 
-const ListaTrilha = ({ idUsuario = 3 }) => {
-  const [trilhas, setTrilhas] = useState([]);
-  const [trilhasFiltradas, setTrilhasFiltradas] = useState([]);
-  const [filtroNomeTrilha, setFiltroNomeTrilha] = useState("");
-  const [menuCollapsed, setMenuCollapsed] = useState(false);
+const ListaTrilha = ({ usuario, onLogout }) => {
+  const [trilhas, setTrilhas] = useState([])
+  const [trilhasFiltradas, setTrilhasFiltradas] = useState([])
+  const [filtroNomeTrilha, setFiltroNomeTrilha] = useState('')
+  const [menuCollapsed, setMenuCollapsed] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
-    get(`/vivo-journey/usuarios/${idUsuario}/trilhas`).then((data) => {
-      setTrilhas(data);
-      setTrilhasFiltradas(data);
-    });
-  }, []);
+    if (usuario?.id_usuario) {
+      get(`/vivo-journey/usuarios/${usuario.id_usuario}/trilhas`).then(data => {
+        setTrilhas(data)
+        setTrilhasFiltradas(data)
+      })
+    }
+  }, [usuario])
 
   const buscarTrilhaPorFiltro = () => {
-    const filtradas = trilhas?.filter((trilha) => {
-      if (!filtroNomeTrilha) return true;
-      const regex = new RegExp(filtroNomeTrilha, "i");
-      return regex.test(trilha?.nome);
-    });
-    setTrilhasFiltradas(filtradas);
-  };
+    const filtradas = trilhas?.filter(trilha => {
+      if (!filtroNomeTrilha) return true
+      const regex = new RegExp(filtroNomeTrilha, 'i')
+      return regex.test(trilha?.nome)
+    })
+    setTrilhasFiltradas(filtradas)
+  }
 
-  const formatarPercentual = (p) => {
-    const texto = `${p}%`;
-    if (p === 100) return texto;
-    if (p >= 10) return " " + texto;
-    return "  " + texto;
-  };
+  const formatarPercentual = p => {
+    const texto = `${p}%`
+    if (p === 100) return texto
+    if (p >= 10) return ' ' + texto
+    return '  ' + texto
+  }
 
   return (
     <ResponsiveLayout fullWidth>
       <Loading />
-      <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
+      <Menu
+        collapsed={menuCollapsed}
+        setCollapsed={setMenuCollapsed}
+        usuario={usuario}
+        onLogout={onLogout}
+      />
       <div
         style={{
-          marginLeft: menuCollapsed ? "72px" : "320px", // ajusta conforme menu
-          transition: "margin-left 0.3s ease",
-          padding: "32px",
+          marginLeft: menuCollapsed ? '72px' : '320px', // ajusta conforme menu
+          transition: 'margin-left 0.3s ease',
+          padding: '32px'
         }}
       >
         <Stack space={32}>
           <NavigationBreadcrumbs
             breadcrumbs={[
-              { title: "Dashboard", url: "/dashboard" },
-              { title: "Minhas Trilhas", url: "/lista-trilhas" },
+              { title: 'Dashboard', url: '/dashboard' },
+              { title: 'Minhas Trilhas', url: '/lista-trilhas' }
             ]}
           />
           <Title4>Suas Trilhas</Title4>
 
-          <div style={{ display: "flex", gap: "12px", marginBottom: "32px" }}>
+          <div style={{ display: 'flex', gap: '12px', marginBottom: '32px' }}>
             <div style={{ flex: 1 }}>
               <SearchField
                 name="nomeTrilha"
                 label="Consulte o Nome da Trilha"
-                onChangeValue={(nomeTrilha) => setFiltroNomeTrilha(nomeTrilha)}
+                onChangeValue={nomeTrilha => setFiltroNomeTrilha(nomeTrilha)}
                 fullWidth
               />
             </div>
@@ -86,14 +93,14 @@ const ListaTrilha = ({ idUsuario = 3 }) => {
           <Table
             boxed
             heading={[
-              "Id Trilha",
-              "Nome",
-              "Data Início",
-              "Data Prev. Fim",
-              "Progresso",
-              "",
+              'Id Trilha',
+              'Nome',
+              'Data Início',
+              'Data Prev. Fim',
+              'Progresso',
+              ''
             ]}
-            content={trilhasFiltradas?.map((trilha) => ({
+            content={trilhasFiltradas?.map(trilha => ({
               cells: [
                 trilha?.id_trilha,
                 trilha?.nome,
@@ -101,13 +108,13 @@ const ListaTrilha = ({ idUsuario = 3 }) => {
                 trilha?.data_prevista_fim,
                 <Inline space={16} alignItems="center">
                   <Meter
-                    colors={["var(--cor-rosa-chiclete)", "#B292C8"]}
+                    colors={['var(--cor-rosa-chiclete)', '#B292C8']}
                     type="linear"
                     width={190}
                     values={[
                       trilha?.percentual_progresso,
                       100 - trilha?.percentual_progresso,
-                      0,
+                      0
                     ]}
                   />
                   <Text>
@@ -116,27 +123,27 @@ const ListaTrilha = ({ idUsuario = 3 }) => {
                 </Inline>,
                 <ButtonSecondary
                   style={{
-                    backgroundColor: "#FDE6F9",
-                    borderColor: "var(--cor-rosa-chiclete)",
-                    color: "var(--cor-rosa-chiclete)",
+                    backgroundColor: '#FDE6F9',
+                    borderColor: 'var(--cor-rosa-chiclete)',
+                    color: 'var(--cor-rosa-chiclete)'
                   }}
                   small
                   onPress={() =>
-                    navigate("/trilha-progresso", {
-                      state: { idTrilha: trilha?.id_trilha },
+                    navigate('/trilha-progresso', {
+                      state: { idTrilha: trilha?.id_trilha }
                     })
                   }
                 >
                   Acessar
-                </ButtonSecondary>,
+                </ButtonSecondary>
               ],
-              actions: [],
+              actions: []
             }))}
           />
         </Stack>
       </div>
     </ResponsiveLayout>
-  );
-};
+  )
+}
 
-export default ListaTrilha;
+export default ListaTrilha

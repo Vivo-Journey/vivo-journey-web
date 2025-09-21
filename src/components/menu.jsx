@@ -11,21 +11,17 @@ import {
   Inline,
   Text1,
 } from "@telefonica/mistica";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/menu.css";
 import logoVivoMenu from "../assets/img/VivoLogoMenu.svg";
-import { get } from "../utils/api";
 
-const Menu = ({ collapsed, setCollapsed }) => {
-  const [user, setUser] = useState(null);
+const Menu = ({ collapsed, setCollapsed, usuario, onLogout }) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    get("/vivo-journey/usuarios/3").then((data) => setUser(data));
-  }, []);
-
-  const usuario = user ?? { primeiro_nome: "Vivo", ultimo_nome: "Journey" };
+  const usuarioData = usuario ?? {
+    primeiro_nome: "Vivo",
+    ultimo_nome: "Journey",
+  };
 
   return (
     <div
@@ -78,7 +74,7 @@ const Menu = ({ collapsed, setCollapsed }) => {
             />
             {!collapsed && (
               <Text1>
-                {usuario?.primeiro_nome + " " + usuario?.ultimo_nome}
+                {usuarioData?.primeiro_nome + " " + usuarioData?.ultimo_nome}
               </Text1>
             )}
           </Inline>
@@ -104,27 +100,28 @@ const Menu = ({ collapsed, setCollapsed }) => {
               <IconDigitalLibraryRegular size={20} />
               {!collapsed && <p>Minhas Trilhas</p>}
             </button>
-            <button 
+            <button
               className="menu-option"
-              onClick={() => navigate("/lista-certificados")}>
+              onClick={() => navigate("/lista-certificados")}
+            >
               <IconStarRegular size={20} />
               {!collapsed && <p>Meus Certificados</p>}
             </button>
-            <button 
+            <button
               className="menu-option"
-              onClick={() => navigate("/lista-documentos")}>
+              onClick={() => navigate("/lista-documentos")}
+            >
               <IconFolderRegular size={20} />
               {!collapsed && <p>Documentos</p>}
             </button>
-            <button 
+            <button
               className="menu-option"
-              onClick={() => navigate("/suporte")}>
+              onClick={() => navigate("/suporte")}
+            >
               <IconQuestionRegular size={20} />
               {!collapsed && <p>Ajuda</p>}
             </button>
-            <button 
-              className="menu-option"
-              onClick={() => navigate("/")}>
+            <button className="menu-option" onClick={onLogout}>
               <IconLogoutRegular size={20} />
               {!collapsed && <p>Logout</p>}
             </button>

@@ -14,13 +14,18 @@ import "../assets/css/suporte.css";
 import Loading from "../components/loading";
 import Menu from "../components/menu";
 
-export default function Suporte() {
+export default function Suporte({ usuario, onLogout }) {
   const [menuCollapsed, setMenuCollapsed] = useState(false);
 
   return (
     <ResponsiveLayout fullWidth>
       <Loading />
-      <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
+      <Menu
+        collapsed={menuCollapsed}
+        setCollapsed={setMenuCollapsed}
+        usuario={usuario}
+        onLogout={onLogout}
+      />
       <div
         style={{
           marginLeft: menuCollapsed ? "72px" : "320px", // ajusta conforme o menu

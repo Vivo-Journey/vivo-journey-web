@@ -19,7 +19,7 @@ import Menu from "../components/menu";
 import MenuTrilhas from "../components/menu-trilhas";
 import { get } from "../utils/api";
 
-export default function ConteudoTrilha({ usuarioId = 3 }) {
+export default function ConteudoTrilha({ usuario, onLogout }) {
   const [menuCollapsed, setMenuCollapsed] = useState(false);
   const [conteudos, setConteudos] = useState([]);
   const [selectedConteudoId, setSelectedConteudoId] = useState(null);
@@ -28,14 +28,13 @@ export default function ConteudoTrilha({ usuarioId = 3 }) {
   const location = useLocation();
   const { idModulo, idTrilha } = location.state || {};
 
-  console.log(idModulo, idTrilha);
-
-  // Buscar conteúdos do módulo
   useEffect(() => {
+    if (!idTrilha || !idModulo || !usuario?.id_usuario) return;
+
     get(
-      `/vivo-journey/usuarios/${usuarioId}/trilhas/${idTrilha}/modulos/${idModulo}/conteudos`
+      `/vivo-journey/usuarios/${usuario.id_usuario}/trilhas/${idTrilha}/modulos/${idModulo}/conteudos`
     ).then((data) => setConteudos(data));
-  }, [usuarioId, idTrilha, idModulo]);
+  }, [usuario, idTrilha, idModulo, navigate]);
 
   // Seleciona automaticamente o primeiro conteúdo
   useEffect(() => {
@@ -160,7 +159,12 @@ export default function ConteudoTrilha({ usuarioId = 3 }) {
     <ResponsiveLayout fullWidth>
       <Loading />
       {/* Menu principal */}
-      <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
+      <Menu
+        collapsed={menuCollapsed}
+        setCollapsed={setMenuCollapsed}
+        usuario={usuario}
+        onLogout={onLogout}
+      />
 
       {/* Área do conteúdo */}
       <div

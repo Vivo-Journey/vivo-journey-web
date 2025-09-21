@@ -9,24 +9,29 @@ import {
   Title4,
 } from "@telefonica/mistica";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../assets/css/dashboard.css";
 import "../assets/css/global.css";
 import Loading from "../components/loading";
 import Menu from "../components/menu";
 import { get } from "../utils/api";
 
-const ListaDocumentos = ({ idUsuario = 3 }) => {
+const ListaDocumentos = ({ usuario, onLogout }) => {
   const [documentos, setDocumentos] = useState([]);
   const [documentosFiltrados, setDocumentosFiltrados] = useState([]);
   const [filtroTituloDocumento, setFiltroTituloDocumento] = useState("");
   const [menuCollapsed, setMenuCollapsed] = useState(false);
 
   useEffect(() => {
-    get(`/vivo-journey/usuarios/${idUsuario}/documentos`).then((data) => {
-      setDocumentos(data);
-      setDocumentosFiltrados(data);
-    });
-  }, []);
+    if (usuario?.id_usuario) {
+      get(`/vivo-journey/usuarios/${usuario.id_usuario}/documentos`).then(
+        (data) => {
+          setDocumentos(data);
+          setDocumentosFiltrados(data);
+        }
+      );
+    }
+  }, [usuario]);
 
   const buscarDocumentosPorFiltro = () => {
     const filtradas = documentos?.filter((doc) => {
@@ -40,7 +45,12 @@ const ListaDocumentos = ({ idUsuario = 3 }) => {
   return (
     <ResponsiveLayout fullWidth>
       <Loading />
-      <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
+      <Menu
+        collapsed={menuCollapsed}
+        setCollapsed={setMenuCollapsed}
+        usuario={usuario}
+        onLogout={onLogout}
+      />
       <div
         style={{
           marginLeft: menuCollapsed ? "72px" : "320px", // ajusta conforme o menu
