@@ -44,7 +44,7 @@ export default function ConteudoTrilha({ usuarioId = 3 }) {
     }
   }, [conteudos, selectedConteudoId]);
 
-  const selectedConteudo = conteudos.find(
+  const selectedConteudo = conteudos?.find(
     (c) => c.id_conteudo === selectedConteudoId
   );
 
