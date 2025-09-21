@@ -1,0 +1,42 @@
+.aligment{
+    display: flex;
+    justify-content: flex-end;
+    margin: -32px;
+}
+
+.conteudo-container{
+    width: 80%;
+    height: 100%;
+    padding: 4% 4%;
+}
+
+.conteudo-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #55038C;
+    margin-bottom: 1%;
+}
+
+.conteudo-container hr{
+    width: 100%;
+    border: 1px solid #DDDDDD;
+    margin-bottom: 5%;
+}
+
+.conteudo-container section{
+    margin: 3% 0 3% 0;
+    border-radius: 20px;
+    padding: 3% 4%;
+}
+
+.conteudo-text-info{
+    background-color: #FFFF;
+}
+
+.conteudo-text-titulo{
+    font-size: 28px;
+    display: flex;
+    justify-content: center;
+}

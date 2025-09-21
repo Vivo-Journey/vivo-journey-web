@@ -14,12 +14,14 @@ import { useState } from "react";
 import Menu from "../components/menu";
 import '../assets/css/global.css';
 import '../assets/css/feedback.css';
+import Loading from "../components/loading";
 
 export default function Feedback() {
   const [menuCollapsed, setMenuCollapsed] = useState(false);
 
   return (
     <ResponsiveLayout fullWidth>
+      <Loading />
       <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
       <div
         style={{

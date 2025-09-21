@@ -1,5 +1,4 @@
 import {
-  Box,
   ButtonPrimary,
   ButtonSecondary,
   NavigationBreadcrumbs,
@@ -10,21 +9,20 @@ import {
   Title4
 } from "@telefonica/mistica";
 import { useEffect, useState } from "react";
-import '../assets/css/dashboard.css';
-import '../assets/css/global.css';
+import "../assets/css/dashboard.css";
+import "../assets/css/global.css";
+import Loading from "../components/loading";
 import Menu from "../components/menu";
 import { get } from "../utils/api";
-import { useNavigate } from "react-router-dom";
 
-const ListaDocumentos = () => {
+const ListaDocumentos = ({ idUsuario = 3 }) => {
   const [documentos, setDocumentos] = useState([]);
   const [documentosFiltrados, setDocumentosFiltrados] = useState([]);
   const [filtroTituloDocumento, setFiltroTituloDocumento] = useState("");
   const [menuCollapsed, setMenuCollapsed] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    get("/vivo-journey/usuarios/3/documentos").then((data) => {
+    get(`/vivo-journey/usuarios/${idUsuario}/documentos`).then((data) => {
       setDocumentos(data);
       setDocumentosFiltrados(data);
     });
@@ -33,7 +31,7 @@ const ListaDocumentos = () => {
   const buscarDocumentosPorFiltro = () => {
     const filtradas = documentos?.filter((doc) => {
       if (!filtroTituloDocumento) return true;
-      const regex = new RegExp(filtroTituloDocumento, 'i');
+      const regex = new RegExp(filtroTituloDocumento, "i");
       return regex.test(doc?.titulo);
     });
     setDocumentosFiltrados(filtradas);
@@ -41,6 +39,7 @@ const ListaDocumentos = () => {
 
   return (
     <ResponsiveLayout fullWidth>
+      <Loading />
       <Menu collapsed={menuCollapsed} setCollapsed={setMenuCollapsed} />
       <div
         style={{
@@ -52,8 +51,8 @@ const ListaDocumentos = () => {
         <Stack space={32}>
           <NavigationBreadcrumbs
             breadcrumbs={[
-              { title: "Dashboard", url: "/" },
-              { title: "Documentos", url: "/lista-documentos" }
+              { title: "Dashboard", url: "/dashboard" },
+              { title: "Documentos", url: "/lista-documentos" },
             ]}
           />
           <Title4>Documentos Úteis</Title4>
@@ -67,7 +66,9 @@ const ListaDocumentos = () => {
                 fullWidth
               />
             </div>
-            <ButtonPrimary onPress={buscarDocumentosPorFiltro}>Buscar</ButtonPrimary>
+            <ButtonPrimary onPress={buscarDocumentosPorFiltro}>
+              Buscar
+            </ButtonPrimary>
           </div>
 
           <Table
@@ -85,7 +86,11 @@ const ListaDocumentos = () => {
                     color: "var(--cor-rosa-chiclete)",
                   }}
                   small
-                  onPress={() => Promise.resolve().then(() => window.open(doc.url_documento, "_blank"))}
+                  onPress={() =>
+                    Promise.resolve().then(() =>
+                      window.open(doc.url_documento, "_blank")
+                    )
+                  }
                 >
                   Visualizar Documento
                 </ButtonSecondary>,
